@@ -24,7 +24,7 @@ public class ValidateButtonListener implements ChangeListener {
 	public void stateChanged(final ChangeEvent e) {
 		if (validatePuzzleButton.isSelected()) {
 			// TODO: remove incorrect values
-			frame.repaintSudokuPanel();
+			frame.repaintPanel();
 			validatePuzzleButton.setSelected(false);
 		}
 	}

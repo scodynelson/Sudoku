@@ -24,7 +24,7 @@ public class ResetButtonListener implements ChangeListener {
 	public void stateChanged(final ChangeEvent e) {
 		if (resetPuzzleButton.isSelected()) {
 			puzzle.reset();
-			frame.repaintSudokuPanel();
+			frame.repaintPanel();
 			resetPuzzleButton.setSelected(false);
 		}
 	}

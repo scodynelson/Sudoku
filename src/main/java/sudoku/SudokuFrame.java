@@ -20,7 +20,7 @@ public class SudokuFrame implements Serializable {
 	private final SudokuPuzzle model;
 
 	private JFrame frame;
-	private SudokuPanel sudokuPanel;
+	private SudokuPanel panel;
 
 	public SudokuFrame(final SudokuPuzzle model) {
 		this.model = model;
@@ -28,7 +28,7 @@ public class SudokuFrame implements Serializable {
 	}
 
 	private void init() {
-		sudokuPanel = new SudokuPanel(this, model);
+		panel = new SudokuPanel(this, model);
 
 		frame = new JFrame();
 		frame.setTitle(SudokuResources.get("sudoku.frame.title"));
@@ -37,13 +37,14 @@ public class SudokuFrame implements Serializable {
 
 			@Override
 			public void windowClosing(final WindowEvent e) {
-				exitProcedure();
+				frame.dispose();
+				System.exit(0);
 			}
 		});
 
 		final JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		mainPanel.add(sudokuPanel);
+		mainPanel.add(panel);
 
 		final ButtonPanel buttonPanel = new ButtonPanel(this, model);
 
@@ -58,24 +59,19 @@ public class SudokuFrame implements Serializable {
 		frame.setVisible(true);
 	}
 
-	private void exitProcedure() {
-		frame.dispose();
-		System.exit(0);
-	}
-
-	public Rectangle getBounds() {
-		final Rectangle f = frame.getBounds();
-		final Rectangle w = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-		f.x = (w.width - f.width) / 2;
-		f.y = (w.height - f.height) / 2;
-		return f;
+	private Rectangle getBounds() {
+		final Rectangle bounds = frame.getBounds();
+		final Rectangle windowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		bounds.x = (windowBounds.width - bounds.width) / 2;
+		bounds.y = (windowBounds.height - bounds.height) / 2;
+		return bounds;
 	}
 
 	public JFrame getFrame() {
 		return frame;
 	}
 
-	public void repaintSudokuPanel() {
-		sudokuPanel.repaint();
+	public void repaintPanel() {
+		panel.repaint();
 	}
 }

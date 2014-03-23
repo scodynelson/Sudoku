@@ -34,7 +34,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 				sudokuCell.setGuessValue(value);
 				removeValue(puzzle.getCellMap(), value, sudokuCell.getCellLocation());
 				sudokuCell.clearPossibleValues();
-				frame.repaintSudokuPanel();
+				frame.repaintPanel();
 			}
 		}
 	}

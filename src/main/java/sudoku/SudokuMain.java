@@ -9,7 +9,7 @@ public final class SudokuMain implements Runnable {
 	private SudokuMain() {
 	}
 
-	public static void main(final String[] args) {
+	public static void main(final String... args) {
 		SwingUtilities.invokeLater(new SudokuMain());
 	}
 
