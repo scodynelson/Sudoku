@@ -1,10 +1,10 @@
 package sudoku.panel;
 
 import sudoku.SudokuFrame;
-import sudoku.SudokuUtils;
 import sudoku.listener.SetValueMouseAdapter;
 import sudoku.model.SudokuPuzzle;
 import sudoku.renderer.SudokuPuzzleRenderer;
+import sudoku.resources.SudokuConstants;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -30,8 +30,8 @@ public class SudokuPanel extends JPanel {
 
 		addMouseListener(new SetValueMouseAdapter(frame, puzzle));
 
-		final int drawWidth = SudokuUtils.DRAW_WIDTH;
-		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
+		final int drawWidth = SudokuConstants.DRAW_WIDTH;
+		final int puzzleWidth = SudokuConstants.PUZZLE_WIDTH;
 
 		final int widthHeight = (drawWidth * puzzleWidth) + 1;
 		setPreferredSize(new Dimension(widthHeight, widthHeight));

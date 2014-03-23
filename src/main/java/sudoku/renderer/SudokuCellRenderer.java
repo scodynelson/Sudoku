@@ -1,7 +1,8 @@
 package sudoku.renderer;
 
-import sudoku.SudokuUtils;
 import sudoku.model.SudokuCell;
+import sudoku.model.SudokuCellBorder;
+import sudoku.resources.SudokuConstants;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -30,8 +31,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	@Override
 	public void draw(final SudokuCell object, final Graphics g) {
 
-		final int widthHeight = SudokuUtils.DRAW_WIDTH;
-		final int cellPosition = object.getCellPosition();
+		final int widthHeight = SudokuConstants.DRAW_WIDTH;
 		final Rectangle bounds = object.getBounds();
 		final int x = bounds.x;
 		final int y = bounds.y;
@@ -42,7 +42,8 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		g.setColor(Color.BLACK);
 		g.drawRect(x, y, widthHeight, widthHeight);
 
-		drawBorder(g, x, y, widthHeight, cellPosition);
+		final SudokuCellBorder cellBorder = object.getCellBorder();
+		drawBorder(g, x, y, widthHeight, cellBorder);
 
 		final Font font = g.getFont();
 		final FontRenderContext frc = new FontRenderContext(null, true, true);
@@ -86,41 +87,40 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
 			g.drawImage(image, xx, yy, null);
 		}
-
 	}
 
 	private static void drawBorder(final Graphics g, final int x, final int y, final int width,
-								   final int cellPosition) {
-		switch (cellPosition) {
-			case 1:
+								   final SudokuCellBorder cellBorder) {
+		switch (cellBorder) {
+			case TOP_LEFT:
 				drawLeftBorder(g, x, y, width);
 				drawTopBorder(g, x, y, width);
 				break;
-			case 2:
+			case TOP:
 				drawTopBorder(g, x, y, width);
 				break;
-			case 3:
+			case TOP_RIGHT:
 				drawTopBorder(g, x, y, width);
 				drawRightBorder(g, x, y, width);
 				break;
-			case 4:
+			case LEFT:
 				drawLeftBorder(g, x, y, width);
 				break;
-			case 6:
+			case RIGHT:
 				drawRightBorder(g, x, y, width);
 				break;
-			case 7:
+			case BOTTOM_LEFT:
 				drawLeftBorder(g, x, y, width);
 				drawBottomBorder(g, x, y, width);
 				break;
-			case 8:
+			case BOTTOM:
 				drawBottomBorder(g, x, y, width);
 				break;
-			case 9:
+			case BOTTOM_RIGHT:
 				drawBottomBorder(g, x, y, width);
 				drawRightBorder(g, x, y, width);
 				break;
-			default:
+			case NONE:
 				break;
 		}
 	}

@@ -3,6 +3,7 @@ package sudoku;
 import sudoku.model.SudokuPuzzle;
 import sudoku.panel.ButtonPanel;
 import sudoku.panel.SudokuPanel;
+import sudoku.resources.SudokuConstants;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -44,10 +45,11 @@ public class SudokuFrame implements Serializable {
 		panel = new SudokuPanel(this, puzzle);
 
 		frame = new JFrame();
-		frame.setTitle(SudokuResources.get("sudoku.frame.title"));
+		frame.setTitle(SudokuConstants.FRAME_TITLE);
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 
+			@SuppressWarnings("all")
 			@Override
 			public void windowClosing(final WindowEvent e) {
 				frame.dispose();

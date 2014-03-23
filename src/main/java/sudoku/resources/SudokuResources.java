@@ -1,11 +1,11 @@
-package sudoku;
+package sudoku.resources;
 
 import java.util.ResourceBundle;
 
 /**
  * The {@code SudokuResources} object fetches external resources from an external properties file for use in the application.
  */
-public final class SudokuResources {
+final class SudokuResources {
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("sudoku");
 
@@ -21,7 +21,7 @@ public final class SudokuResources {
 	 * @param key the key to match the external resource string value
 	 * @return the matching external resource string value
 	 */
-	public static String get(final String key) {
+	static String getString(final String key) {
 		return RESOURCE_BUNDLE.getString(key);
 	}
 
@@ -31,7 +31,7 @@ public final class SudokuResources {
 	 * @param key the key to match the external resource integer value
 	 * @return the matching external resource integer value
 	 */
-	public static int getInt(final String key) {
+	static int getInt(final String key) {
 		final String value = RESOURCE_BUNDLE.getString(key);
 		return Integer.valueOf(value);
 	}

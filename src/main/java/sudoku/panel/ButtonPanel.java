@@ -1,11 +1,11 @@
 package sudoku.panel;
 
 import sudoku.SudokuFrame;
-import sudoku.SudokuResources;
 import sudoku.listener.ResetButtonListener;
 import sudoku.listener.ToggleListener;
 import sudoku.listener.ValidateButtonListener;
 import sudoku.model.SudokuPuzzle;
+import sudoku.resources.SudokuConstants;
 
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -49,8 +49,8 @@ public class ButtonPanel implements Serializable {
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 
-		resetPuzzleButton = new JToggleButton(SudokuResources.get("sudoku.button.panel.reset.button.text"));
-		validatePuzzleButton = new JToggleButton(SudokuResources.get("sudoku.button.panel.validate.button.text"));
+		resetPuzzleButton = new JToggleButton(SudokuConstants.RESET_BUTTON_TEXT);
+		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
 		final ToggleListener toggleListener = new ToggleListener(resetPuzzleButton, validatePuzzleButton);
 
 		int gridy = 0;

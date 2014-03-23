@@ -1,6 +1,6 @@
 package sudoku.model;
 
-import sudoku.SudokuUtils;
+import sudoku.resources.SudokuConstants;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -12,24 +12,21 @@ public class SudokuCell implements Serializable {
 
 	private static final long serialVersionUID = -8840221914149844975L;
 
-	public static final int MAX_VALUE = 9;
-
 	private final int value;
 	private final boolean isInitial;
-	private final int cellPosition;
-
+	private final SudokuCellBorder cellBorder;
 	private final Point cellLocation;
 	private final Rectangle bounds;
 
-	private final List<Integer> possibleValues = new ArrayList<>(MAX_VALUE);
+	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
 
 	private int guessValue;
 
-	public SudokuCell(final int value, final boolean isInitial, final int cellPosition,
+	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorder cellBorder,
 					  final Point cellLocation) {
 		this.value = value;
 		this.isInitial = isInitial;
-		this.cellPosition = cellPosition;
+		this.cellBorder = cellBorder;
 
 		this.cellLocation = cellLocation;
 		bounds = getRectangle(cellLocation);
@@ -42,7 +39,7 @@ public class SudokuCell implements Serializable {
 		final int row = cellLocation.x;
 		final int column = cellLocation.y;
 
-		final int drawWidth = SudokuUtils.DRAW_WIDTH;
+		final int drawWidth = SudokuConstants.DRAW_WIDTH;
 
 		final int x = column * drawWidth;
 		final int y = row * drawWidth;
@@ -54,7 +51,7 @@ public class SudokuCell implements Serializable {
 		guessValue = 0;
 		possibleValues.clear();
 
-		for (int i = 1; i <= MAX_VALUE; i++) {
+		for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
 			possibleValues.add(i);
 		}
 	}
@@ -67,8 +64,8 @@ public class SudokuCell implements Serializable {
 		return isInitial;
 	}
 
-	public int getCellPosition() {
-		return cellPosition;
+	public SudokuCellBorder getCellBorder() {
+		return cellBorder;
 	}
 
 	public Point getCellLocation() {

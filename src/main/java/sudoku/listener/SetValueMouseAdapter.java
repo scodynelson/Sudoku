@@ -1,10 +1,9 @@
 package sudoku.listener;
 
 import sudoku.SudokuFrame;
-import sudoku.SudokuResources;
-import sudoku.SudokuUtils;
 import sudoku.model.SudokuCell;
 import sudoku.model.SudokuPuzzle;
+import sudoku.resources.SudokuConstants;
 
 import javax.swing.JOptionPane;
 import java.awt.Point;
@@ -42,7 +41,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	private int getValue(final SudokuCell sudokuCell) {
 		int value = 0;
 		while (value == 0) {
-			final String inputValue = JOptionPane.showInputDialog(frame.getFrame(), SudokuResources.get("sudoku.input.dialog.title"));
+			final String inputValue = JOptionPane.showInputDialog(frame.getFrame(), SudokuConstants.INPUT_DIALOG_TITLE);
 
 			if (inputValue == null) { // Cancel button
 				break;
@@ -71,7 +70,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	}
 
 	private static void removeValue(final Map<Point, SudokuCell> cellMap, final int value, final Point point) {
-		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
+		final int puzzleWidth = SudokuConstants.PUZZLE_WIDTH;
 
 		// Remove from Y axis
 		for (int i = 0; i < puzzleWidth; i++) {
