@@ -53,36 +53,36 @@ public class ButtonPanel implements Serializable {
 		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
 		final ToggleListener toggleListener = new ToggleListener(resetPuzzleButton, validatePuzzleButton);
 
-		int gridy = 0;
-		initResetButton(toggleListener, gridy++);
-		initValidateButton(toggleListener, gridy++);
+		int gridY = 0;
+		initResetButton(toggleListener, gridY++);
+		initValidateButton(toggleListener, gridY++);
 	}
 
 	/**
 	 * This private method initializes the "reset" button for the sudoku game with the provided {@code toggleListener}
-	 * and {@code gridy} properties.
+	 * and {@code gridY} properties.
 	 *
 	 * @param toggleListener the change listener for the "reset" button
-	 * @param gridy          the 'y' location on the grid where the "reset" button will be located
+	 * @param gridY          the 'y' location on the grid where the "reset" button will be located
 	 */
-	private void initResetButton(final ToggleListener toggleListener, final int gridy) {
+	private void initResetButton(final ToggleListener toggleListener, final int gridY) {
 		resetPuzzleButton.addChangeListener(toggleListener);
 		resetPuzzleButton.addChangeListener(new ResetButtonListener(resetPuzzleButton, frame, puzzle));
-		addButtonToPanel(panel, resetPuzzleButton, 0, gridy, 1, 1,
+		addButtonToPanel(panel, resetPuzzleButton, 0, gridY, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL);
 	}
 
 	/**
 	 * This private method initializes the "validate" button for the sudoku game with the provided {@code toggleListener}
-	 * and {@code gridy} properties.
+	 * and {@code gridY} properties.
 	 *
 	 * @param toggleListener the change listener for the "validate" button
-	 * @param gridy          the 'y' location on the grid where the "validate" button will be located
+	 * @param gridY          the 'y' location on the grid where the "validate" button will be located
 	 */
-	private void initValidateButton(final ToggleListener toggleListener, final int gridy) {
+	private void initValidateButton(final ToggleListener toggleListener, final int gridY) {
 		validatePuzzleButton.addChangeListener(toggleListener);
 		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
-		addButtonToPanel(panel, validatePuzzleButton, 0, gridy, 1, 1,
+		addButtonToPanel(panel, validatePuzzleButton, 0, gridY, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL);
 	}
 
@@ -92,20 +92,20 @@ public class ButtonPanel implements Serializable {
 	 *
 	 * @param panel        the panel to add the toggleButton to
 	 * @param toggleButton the toggleButton to add to the panel
-	 * @param gridx        the x location on the grid
-	 * @param gridy        the y location on the grid
-	 * @param gridwidth    the grid width
-	 * @param gridheight   the grid height
+	 * @param gridX        the x location on the grid
+	 * @param gridY        the y location on the grid
+	 * @param gridWidth    the grid width
+	 * @param gridHeight   the grid height
 	 * @param anchor       the grid anchor
 	 * @param fill         the grid fill
 	 */
 	private static void addButtonToPanel(final JPanel panel, final JToggleButton toggleButton,
-										 final int gridx, final int gridy, final int gridwidth, final int gridheight,
+										 final int gridX, final int gridY, final int gridWidth, final int gridHeight,
 										 final int anchor, final int fill) {
 
 		final Insets insets = new Insets(10, 10, 0, 10);
 		final GridBagConstraints gridBagConstraints =
-				new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0D, 1.0D, anchor, fill, insets, 0, 0);
+				new GridBagConstraints(gridX, gridY, gridWidth, gridHeight, 1.0D, 1.0D, anchor, fill, insets, 0, 0);
 		panel.add(toggleButton, gridBagConstraints);
 	}
 

@@ -9,4 +9,6 @@ public interface SudokuConstants {
 
 	int DRAW_WIDTH = SudokuResources.getInt("sudoku.draw.width");
 	int PUZZLE_WIDTH = SudokuResources.getInt("sudoku.puzzle.width");
+	int PUZZLE_MIN_VALUE = SudokuResources.getInt("sudoku.puzzle.min.value");
+	int PUZZLE_MAX_VALUE = SudokuResources.getInt("sudoku.puzzle.max.value");
 }

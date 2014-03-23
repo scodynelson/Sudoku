@@ -27,7 +27,7 @@ public final class SudokuMain implements Runnable {
 
 	@Override
 	public void run() {
-		final SudokuPuzzle sudokuPuzzle = SudokuRepository.INSTANCE.getPuzzle(0);
+		final SudokuPuzzle sudokuPuzzle = SudokuRepository.INSTANCE.getPuzzle();
 		new SudokuFrame(sudokuPuzzle);
 	}
 }
