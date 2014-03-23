@@ -2,14 +2,15 @@ package sudoku.listener;
 
 import sudoku.SudokuFrame;
 import sudoku.SudokuResources;
+import sudoku.SudokuUtils;
 import sudoku.model.SudokuCell;
 import sudoku.model.SudokuPuzzle;
-import sudoku.model.SudokuPuzzleService;
 
 import javax.swing.JOptionPane;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 
 public class SetValueMouseAdapter extends MouseAdapter {
 
@@ -31,7 +32,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			final int value = getValue(sudokuCell);
 			if (value > 0) {
 				sudokuCell.setGuessValue(value);
-				SudokuPuzzleService.removeValue(puzzle.getCellMap(), value, sudokuCell.getCellLocation());
+				removeValue(puzzle.getCellMap(), value, sudokuCell.getCellLocation());
 				sudokuCell.clearPossibleValues();
 				frame.repaintSudokuPanel();
 			}
@@ -67,5 +68,34 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			return 0;
 		}
 		return value;
+	}
+
+	private static void removeValue(final Map<Point, SudokuCell> cellMap, final int value, final Point point) {
+		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
+
+		// Remove from Y axis
+		for (int i = 0; i < puzzleWidth; i++) {
+			final Point pointToGet = new Point(i, point.y);
+			final SudokuCell currentCell = cellMap.get(pointToGet);
+			currentCell.removePossibleValue(value);
+		}
+
+		// Remove from X axis
+		for (int j = 0; j < puzzleWidth; j++) {
+			final Point pointToGet = new Point(point.x, j);
+			final SudokuCell currentCell = cellMap.get(pointToGet);
+			currentCell.removePossibleValue(value);
+		}
+
+		// Remove from paired block
+		final int ii = point.x / 3;
+		final int jj = point.y / 3;
+		for (int i = ii * 3; i < ((ii + 1) * 3); i++) {
+			for (int j = jj * 3; j < ((jj + 1) * 3); j++) {
+				final Point pointToGet = new Point(i, j);
+				final SudokuCell currentCell = cellMap.get(pointToGet);
+				currentCell.removePossibleValue(value);
+			}
+		}
 	}
 }

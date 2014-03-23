@@ -22,7 +22,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	}
 
 	@Override
-	public void draw(final SudokuCell object, final Graphics graphics) {
+	public void draw(final SudokuCell object, final Graphics g) {
 
 		final int widthHeight = SudokuUtils.DRAW_WIDTH;
 		final int cellPosition = object.getCellPosition();
@@ -30,15 +30,15 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		final int x = bounds.x;
 		final int y = bounds.y;
 
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(x, y, widthHeight, widthHeight);
+		g.setColor(Color.WHITE);
+		g.fillRect(x, y, widthHeight, widthHeight);
 
-		graphics.setColor(Color.BLACK);
-		graphics.drawRect(x, y, widthHeight, widthHeight);
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, widthHeight, widthHeight);
 
-		drawBorder(graphics, x, y, widthHeight, cellPosition);
+		drawBorder(g, x, y, widthHeight, cellPosition);
 
-		final Font font = graphics.getFont();
+		final Font font = g.getFont();
 		final FontRenderContext frc = new FontRenderContext(null, true, true);
 
 		final boolean isInitial = object.isInitial();
@@ -54,7 +54,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 			final int xx = x + ((widthHeight - image.getWidth()) / 2);
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			graphics.drawImage(image, xx, yy, null);
+			g.drawImage(image, xx, yy, null);
 		} else if (guessValue > 0)
 
 		{
@@ -64,7 +64,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 			final int xx = x + ((widthHeight - image.getWidth()) / 2);
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			graphics.drawImage(image, xx, yy, null);
+			g.drawImage(image, xx, yy, null);
 		} else
 
 		{
@@ -84,65 +84,65 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 			final int xx = x + ((widthHeight - image.getWidth()) / 2);
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			graphics.drawImage(image, xx, yy, null);
+			g.drawImage(image, xx, yy, null);
 		}
 
 	}
 
-	private static void drawBorder(final Graphics graphics, final int x, final int y, final int width,
+	private static void drawBorder(final Graphics g, final int x, final int y, final int width,
 								   final int cellPosition) {
 		switch (cellPosition) {
 			case 1:
-				drawLeftBorder(graphics, x, y, width);
-				drawTopBorder(graphics, x, y, width);
+				drawLeftBorder(g, x, y, width);
+				drawTopBorder(g, x, y, width);
 				break;
 			case 2:
-				drawTopBorder(graphics, x, y, width);
+				drawTopBorder(g, x, y, width);
 				break;
 			case 3:
-				drawTopBorder(graphics, x, y, width);
-				drawRightBorder(graphics, x, y, width);
+				drawTopBorder(g, x, y, width);
+				drawRightBorder(g, x, y, width);
 				break;
 			case 4:
-				drawLeftBorder(graphics, x, y, width);
+				drawLeftBorder(g, x, y, width);
 				break;
 			case 6:
-				drawRightBorder(graphics, x, y, width);
+				drawRightBorder(g, x, y, width);
 				break;
 			case 7:
-				drawLeftBorder(graphics, x, y, width);
-				drawBottomBorder(graphics, x, y, width);
+				drawLeftBorder(g, x, y, width);
+				drawBottomBorder(g, x, y, width);
 				break;
 			case 8:
-				drawBottomBorder(graphics, x, y, width);
+				drawBottomBorder(g, x, y, width);
 				break;
 			case 9:
-				drawBottomBorder(graphics, x, y, width);
-				drawRightBorder(graphics, x, y, width);
+				drawBottomBorder(g, x, y, width);
+				drawRightBorder(g, x, y, width);
 				break;
 			default:
 				break;
 		}
 	}
 
-	private static void drawTopBorder(final Graphics graphics, final int x, final int y, final int width) {
-		graphics.drawLine(x, y + 1, x + width, y + 1);
-		graphics.drawLine(x, y + 2, x + width, y + 2);
+	private static void drawTopBorder(final Graphics g, final int x, final int y, final int width) {
+		g.drawLine(x, y + 1, x + width, y + 1);
+		g.drawLine(x, y + 2, x + width, y + 2);
 	}
 
-	private static void drawRightBorder(final Graphics graphics, final int x, final int y, final int width) {
-		graphics.drawLine((x + width) - 1, y, (x + width) - 1, y + width);
-		graphics.drawLine((x + width) - 2, y, (x + width) - 2, y + width);
+	private static void drawRightBorder(final Graphics g, final int x, final int y, final int width) {
+		g.drawLine((x + width) - 1, y, (x + width) - 1, y + width);
+		g.drawLine((x + width) - 2, y, (x + width) - 2, y + width);
 	}
 
-	private static void drawBottomBorder(final Graphics graphics, final int x, final int y, final int width) {
-		graphics.drawLine(x, (y + width) - 1, x + width, (y + width) - 1);
-		graphics.drawLine(x, (y + width) - 2, x + width, (y + width) - 2);
+	private static void drawBottomBorder(final Graphics g, final int x, final int y, final int width) {
+		g.drawLine(x, (y + width) - 1, x + width, (y + width) - 1);
+		g.drawLine(x, (y + width) - 2, x + width, (y + width) - 2);
 	}
 
-	private static void drawLeftBorder(final Graphics graphics, final int x, final int y, final int width) {
-		graphics.drawLine(x + 1, y, x + 1, y + width);
-		graphics.drawLine(x + 2, y, x + 2, y + width);
+	private static void drawLeftBorder(final Graphics g, final int x, final int y, final int width) {
+		g.drawLine(x + 1, y, x + 1, y + width);
+		g.drawLine(x + 2, y, x + 2, y + width);
 	}
 
 	private static BufferedImage createImage(final Font font, final FontRenderContext frc,
