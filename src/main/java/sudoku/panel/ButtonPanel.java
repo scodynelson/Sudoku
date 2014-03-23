@@ -1,5 +1,7 @@
-package sudoku;
+package sudoku.panel;
 
+import sudoku.SudokuFrame;
+import sudoku.SudokuResources;
 import sudoku.listener.ResetButtonListener;
 import sudoku.listener.ToggleListener;
 import sudoku.listener.ValidateButtonListener;

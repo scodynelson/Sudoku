@@ -51,9 +51,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		final Integer value = object.getValue();
 		final Integer guessValue = object.getGuessValue();
 
-		if (isInitial)
-
-		{
+		if (isInitial) {
 			final String s = Integer.toString(value);
 
 			final BufferedImage image = createImage(font, frc, widthHeight, s, object.isInitial());
@@ -61,9 +59,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 			final int xx = x + ((widthHeight - image.getWidth()) / 2);
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
 			g.drawImage(image, xx, yy, null);
-		} else if (guessValue > 0)
-
-		{
+		} else if (guessValue > 0) {
 			final String s = Integer.toString(guessValue);
 
 			final BufferedImage image = createImage(font, frc, widthHeight, s, object.isInitial());
@@ -71,9 +67,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 			final int xx = x + ((widthHeight - image.getWidth()) / 2);
 			final int yy = y + ((widthHeight - image.getHeight()) / 2);
 			g.drawImage(image, xx, yy, null);
-		} else
-
-		{
+		} else {
 			final List<String> list = concatenatePossibleValues(object);
 
 			double imageWidth = 0.0D;

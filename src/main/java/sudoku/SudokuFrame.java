@@ -1,6 +1,8 @@
 package sudoku;
 
 import sudoku.model.SudokuPuzzle;
+import sudoku.panel.ButtonPanel;
+import sudoku.panel.SudokuPanel;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;

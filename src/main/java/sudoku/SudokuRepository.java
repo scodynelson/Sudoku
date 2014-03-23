@@ -17,6 +17,7 @@ public class SudokuRepository {
 		samplePuzzle = new SudokuPuzzle(getCellMap());
 	}
 
+	@SuppressWarnings("all")
 	private static Map<Point, SudokuCell> getCellMap() {
 		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
 
