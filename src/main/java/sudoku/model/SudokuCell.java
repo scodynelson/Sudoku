@@ -67,12 +67,16 @@ public class SudokuCell implements Serializable {
 		return isInitial;
 	}
 
+	public int getCellPosition() {
+		return cellPosition;
+	}
+
 	public Point getCellLocation() {
 		return cellLocation;
 	}
 
-	public int getCellPosition() {
-		return cellPosition;
+	public Rectangle getBounds() {
+		return bounds;
 	}
 
 	public int getGuessValue() {
