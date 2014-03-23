@@ -1,5 +1,7 @@
 package sudoku.model;
 
+import sudoku.SudokuUtils;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
@@ -14,21 +16,38 @@ public class SudokuCell implements Serializable {
 
 	private final int value;
 	private final boolean isInitial;
-	private final Point cellLocation;
 	private final int cellPosition;
+
+	private final Point cellLocation;
+	private final Rectangle bounds;
 
 	private final List<Integer> possibleValues = new ArrayList<>(MAX_VALUE);
 
 	private int guessValue;
-	private Rectangle bounds;
 
-	public SudokuCell(final int value, final boolean isInitial, final Point cellLocation, final int cellPosition) {
+	public SudokuCell(final int value, final boolean isInitial, final int cellPosition,
+					  final Point cellLocation) {
 		this.value = value;
 		this.isInitial = isInitial;
-		this.cellLocation = cellLocation;
 		this.cellPosition = cellPosition;
 
+		this.cellLocation = cellLocation;
+		bounds = getRectangle(cellLocation);
+
 		reset();
+	}
+
+	private static Rectangle getRectangle(final Point cellLocation) {
+
+		final int row = cellLocation.x;
+		final int column = cellLocation.y;
+
+		final int drawWidth = SudokuUtils.DRAW_WIDTH;
+
+		final int x = column * drawWidth;
+		final int y = row * drawWidth;
+
+		return new Rectangle(x, y, drawWidth, drawWidth);
 	}
 
 	public final void reset() {
@@ -82,10 +101,6 @@ public class SudokuCell implements Serializable {
 
 	public void clearPossibleValues() {
 		possibleValues.clear();
-	}
-
-	public void setBounds(final Rectangle bounds) {
-		this.bounds = bounds;
 	}
 
 	public boolean contains(final Point point) {

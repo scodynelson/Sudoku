@@ -4,7 +4,6 @@ import sudoku.SudokuUtils;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.Map;
 
 public class SudokuPuzzleService {
@@ -47,11 +46,8 @@ public class SudokuPuzzleService {
 		for (int i = 0; i < puzzleWidth; i++) {
 			int x = 0;
 			for (int j = 0; j < puzzleWidth; j++) {
-				final Rectangle r = new Rectangle(x, y, drawWidth, drawWidth);
-
 				final Point pointToGet = new Point(i, j);
 				final SudokuCell currentCell = cellMap.get(pointToGet);
-				currentCell.setBounds(r);
 				SudokuCellService.draw(currentCell, g, x, y, currentCell.getCellPosition());
 				x += drawWidth;
 			}

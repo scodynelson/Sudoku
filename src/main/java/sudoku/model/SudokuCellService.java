@@ -144,9 +144,9 @@ public class SudokuCellService {
 		graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
 
 		if (isInitial) {
-			graphics.setColor(Color.BLUE);
+			graphics.setColor(Color.MAGENTA);
 		} else {
-			graphics.setColor(Color.CYAN);
+			graphics.setColor(Color.BLUE);
 		}
 
 		final BigDecimal rY = BigDecimal.valueOf(Math.round(r.getY()));
