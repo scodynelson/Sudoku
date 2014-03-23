@@ -9,14 +9,15 @@ import javax.swing.event.ChangeListener;
 
 public class ResetButtonListener implements ChangeListener {
 
-	private final SudokuFrame frame;
-	private final SudokuPuzzle puzzle;
 	private final JToggleButton resetPuzzleButton;
 
-	public ResetButtonListener(final SudokuFrame frame, final SudokuPuzzle puzzle, final JToggleButton resetPuzzleButton) {
+	private final SudokuFrame frame;
+	private final SudokuPuzzle puzzle;
+
+	public ResetButtonListener(final JToggleButton resetPuzzleButton, final SudokuFrame frame, final SudokuPuzzle puzzle) {
+		this.resetPuzzleButton = resetPuzzleButton;
 		this.frame = frame;
 		this.puzzle = puzzle;
-		this.resetPuzzleButton = resetPuzzleButton;
 	}
 
 	@Override

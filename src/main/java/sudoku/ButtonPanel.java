@@ -16,13 +16,11 @@ public class ButtonPanel implements Serializable {
 
 	private static final long serialVersionUID = 2891957122249934988L;
 
-	private static final Insets BUTTON_INSETS = new Insets(10, 10, 0, 10);
-
 	private final SudokuFrame frame;
 	private final SudokuPuzzle puzzle;
 
 	private JToggleButton resetPuzzleButton;
-	private JToggleButton validateButton;
+	private JToggleButton validatePuzzleButton;
 
 	private JPanel panel;
 
@@ -38,26 +36,27 @@ public class ButtonPanel implements Serializable {
 		panel.setLayout(new GridBagLayout());
 
 		resetPuzzleButton = new JToggleButton(SudokuResources.get("sudoku.button.panel.reset.button.text"));
-		validateButton = new JToggleButton(SudokuResources.get("sudoku.button.panel.validate.button.text"));
-		final ToggleListener tListener = new ToggleListener(resetPuzzleButton, validateButton);
+		validatePuzzleButton = new JToggleButton(SudokuResources.get("sudoku.button.panel.validate.button.text"));
+		final ToggleListener tListener = new ToggleListener(resetPuzzleButton, validatePuzzleButton);
 
 		int gridy = 0;
-		initResetButton(tListener, gridy++);
-		initValidateButton(tListener, gridy++);
+		final Insets buttonInsets = new Insets(10, 10, 0, 10);
+		initResetButton(tListener, gridy++, buttonInsets);
+		initValidateButton(tListener, gridy++, buttonInsets);
 	}
 
-	private void initResetButton(final ToggleListener tListener, final int gridy) {
+	private void initResetButton(final ToggleListener tListener, final int gridy, final Insets buttonInsets) {
 		resetPuzzleButton.addChangeListener(tListener);
-		resetPuzzleButton.addChangeListener(new ResetButtonListener(frame, puzzle, resetPuzzleButton));
+		resetPuzzleButton.addChangeListener(new ResetButtonListener(resetPuzzleButton, frame, puzzle));
 		SudokuUtils.addComponent(panel, resetPuzzleButton, 0, gridy, 1, 1,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, BUTTON_INSETS);
+				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, buttonInsets);
 	}
 
-	private void initValidateButton(final ToggleListener tListener, final int gridy) {
-		validateButton.addChangeListener(tListener);
-		validateButton.addChangeListener(new ValidateButtonListener(frame, puzzle, validateButton));
-		SudokuUtils.addComponent(panel, validateButton, 0, gridy, 1, 1,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, BUTTON_INSETS);
+	private void initValidateButton(final ToggleListener tListener, final int gridy, final Insets buttonInsets) {
+		validatePuzzleButton.addChangeListener(tListener);
+		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
+		SudokuUtils.addComponent(panel, validatePuzzleButton, 0, gridy, 1, 1,
+				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL, buttonInsets);
 	}
 
 	public JPanel getPanel() {
