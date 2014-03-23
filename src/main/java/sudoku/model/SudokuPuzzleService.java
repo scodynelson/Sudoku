@@ -1,57 +1,58 @@
 package sudoku.model;
 
-import sudoku.SudokuResources;
+import sudoku.SudokuUtils;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Map;
 
 public class SudokuPuzzleService {
 
-	private static final int[][] CELL_POSITION = {
-			{1, 2, 3, 1, 2, 3, 1, 2, 3},
-			{4, 5, 6, 4, 5, 6, 4, 5, 6},
-			{7, 8, 9, 7, 8, 9, 7, 8, 9},
+	public static void removeValue(final Map<Point, SudokuCell> cellMap, final int value, final Point point) {
+		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
 
-			{1, 2, 3, 1, 2, 3, 1, 2, 3},
-			{4, 5, 6, 4, 5, 6, 4, 5, 6},
-			{7, 8, 9, 7, 8, 9, 7, 8, 9},
-
-			{1, 2, 3, 1, 2, 3, 1, 2, 3},
-			{4, 5, 6, 4, 5, 6, 4, 5, 6},
-			{7, 8, 9, 7, 8, 9, 7, 8, 9},};
-
-	public static void removeValue(final SudokuCell[][] cells, final int value, final Point point) {
-		final int puzzleWidth = SudokuResources.getInt("sudoku.puzzle.width");
-
+		// Remove from Y axis
 		for (int i = 0; i < puzzleWidth; i++) {
-			cells[i][point.y].removePossibleValue(value);
-		}
-		for (int j = 0; j < puzzleWidth; j++) {
-			cells[point.x][j].removePossibleValue(value);
+			final Point pointToGet = new Point(i, point.y);
+			final SudokuCell currentCell = cellMap.get(pointToGet);
+			currentCell.removePossibleValue(value);
 		}
 
+		// Remove from X axis
+		for (int j = 0; j < puzzleWidth; j++) {
+			final Point pointToGet = new Point(point.x, j);
+			final SudokuCell currentCell = cellMap.get(pointToGet);
+			currentCell.removePossibleValue(value);
+		}
+
+		// Remove from paired block
 		final int ii = point.x / 3;
 		final int jj = point.y / 3;
 		for (int i = ii * 3; i < ((ii + 1) * 3); i++) {
 			for (int j = jj * 3; j < ((jj + 1) * 3); j++) {
-				cells[i][j].removePossibleValue(value);
+				final Point pointToGet = new Point(i, j);
+				final SudokuCell currentCell = cellMap.get(pointToGet);
+				currentCell.removePossibleValue(value);
 			}
 		}
 	}
 
 	public static void draw(final SudokuPuzzle sudokuPuzzle, final Graphics g) {
-		final int puzzleWidth = SudokuResources.getInt("sudoku.puzzle.width");
-		final SudokuCell[][] cells = sudokuPuzzle.getCells();
-		final int drawWidth = SudokuResources.getInt("sudoku.draw.width");
+		final int puzzleWidth = SudokuUtils.PUZZLE_WIDTH;
+		final int drawWidth = SudokuUtils.DRAW_WIDTH;
 
+		final Map<Point, SudokuCell> cellMap = sudokuPuzzle.getCellMap();
 		int y = 0;
 		for (int i = 0; i < puzzleWidth; i++) {
 			int x = 0;
 			for (int j = 0; j < puzzleWidth; j++) {
 				final Rectangle r = new Rectangle(x, y, drawWidth, drawWidth);
-				cells[i][j].setBounds(r);
-				SudokuCellService.draw(cells[i][j], g, x, y, drawWidth, CELL_POSITION[i][j]);
+
+				final Point pointToGet = new Point(i, j);
+				final SudokuCell currentCell = cellMap.get(pointToGet);
+				currentCell.setBounds(r);
+				SudokuCellService.draw(currentCell, g, x, y, currentCell.getCellPosition());
 				x += drawWidth;
 			}
 			y += drawWidth;

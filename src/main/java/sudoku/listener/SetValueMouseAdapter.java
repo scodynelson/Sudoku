@@ -31,7 +31,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			final int value = getValue(sudokuCell);
 			if (value > 0) {
 				sudokuCell.setGuessValue(value);
-				SudokuPuzzleService.removeValue(puzzle.getCells(), value, point);
+				SudokuPuzzleService.removeValue(puzzle.getCellMap(), value, sudokuCell.getCellLocation());
 				sudokuCell.clearPossibleValues();
 				frame.repaintSudokuPanel();
 			}
@@ -44,20 +44,22 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			final String inputValue = JOptionPane.showInputDialog(frame.getFrame(), SudokuResources.get("sudoku.input.dialog.title"));
 
 			if (inputValue == null) { // Cancel button
-				return 0;
+				break;
 			}
 
 			try {
-				value = Integer.parseInt(inputValue);
-				value = testValue(sudokuCell, value);
-			} catch (final NumberFormatException e) {
+				value = testValue(sudokuCell, inputValue);
+			} catch (final NumberFormatException ignored) {
 				value = 0;
 			}
 		}
 		return value;
 	}
 
-	private static int testValue(final SudokuCell sudokuCell, final int value) {
+	private static int testValue(final SudokuCell sudokuCell, final String inputValue) {
+
+		final int value = Integer.parseInt(inputValue);
+
 		if ((value < 1) || (value > 9)) {
 			return 0;
 		}
@@ -66,5 +68,4 @@ public class SetValueMouseAdapter extends MouseAdapter {
 		}
 		return value;
 	}
-
 }

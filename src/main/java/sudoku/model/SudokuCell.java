@@ -15,16 +15,18 @@ public class SudokuCell implements Serializable {
 	private final int value;
 	private final boolean isInitial;
 	private final Point cellLocation;
+	private final int cellPosition;
 
 	private final List<Integer> possibleValues = new ArrayList<>(MAX_VALUE);
 
 	private int guessValue;
 	private Rectangle bounds;
 
-	public SudokuCell(final int value, final boolean isInitial, final Point cellLocation) {
+	public SudokuCell(final int value, final boolean isInitial, final Point cellLocation, final int cellPosition) {
 		this.value = value;
 		this.isInitial = isInitial;
 		this.cellLocation = cellLocation;
+		this.cellPosition = cellPosition;
 
 		reset();
 	}
@@ -48,6 +50,10 @@ public class SudokuCell implements Serializable {
 
 	public Point getCellLocation() {
 		return cellLocation;
+	}
+
+	public int getCellPosition() {
+		return cellPosition;
 	}
 
 	public int getGuessValue() {

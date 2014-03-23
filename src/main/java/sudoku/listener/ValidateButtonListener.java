@@ -1,8 +1,8 @@
 package sudoku.listener;
 
 import sudoku.SudokuFrame;
-import sudoku.model.SudokuPuzzle;
 import sudoku.ValidatePuzzleRunnable;
+import sudoku.model.SudokuPuzzle;
 
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;

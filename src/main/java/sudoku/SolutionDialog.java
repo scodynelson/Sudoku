@@ -23,10 +23,8 @@ public class SolutionDialog {
 	private final int guessCount;
 
 	private final long elapsedTime;
-
-	private JDialog dialog;
-
 	private final SudokuFrame frame;
+	private JDialog dialog;
 
 	public SolutionDialog(final SudokuFrame frame, final int singleCount, final int guessCount,
 						  final long elapsedTime) {

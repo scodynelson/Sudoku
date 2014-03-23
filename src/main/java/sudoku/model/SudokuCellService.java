@@ -1,6 +1,6 @@
 package sudoku.model;
 
-import sudoku.model.SudokuCell;
+import sudoku.SudokuUtils;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,9 @@ import java.util.List;
 
 public class SudokuCellService {
 
-	public static void draw(final SudokuCell sudokuCell, final Graphics g, final int x, final int y, final int widthHeight, final int cellPosition) {
+	public static void draw(final SudokuCell sudokuCell, final Graphics g, final int x, final int y,
+							final int cellPosition) {
+		final int widthHeight = SudokuUtils.DRAW_WIDTH;
 
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, widthHeight, widthHeight);

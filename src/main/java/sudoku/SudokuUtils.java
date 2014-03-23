@@ -5,7 +5,10 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-final class SudokuUtils {
+public final class SudokuUtils {
+
+	public static final int DRAW_WIDTH = SudokuResources.getInt("sudoku.draw.width");
+	public static final int PUZZLE_WIDTH = SudokuResources.getInt("sudoku.puzzle.width");
 
 	static void addComponent(final Container container, final Component component,
 							 final int gridx, final int gridy, final int gridwidth, final int gridheight,
