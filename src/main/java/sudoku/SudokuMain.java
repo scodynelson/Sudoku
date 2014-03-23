@@ -4,19 +4,29 @@ import sudoku.model.SudokuPuzzle;
 
 import javax.swing.SwingUtilities;
 
+/**
+ * The {@code SudokuMain} object is the main runner class for the sudoku game user interface.
+ */
 public final class SudokuMain implements Runnable {
 
+	/**
+	 * Private constructor.
+	 */
 	private SudokuMain() {
 	}
 
+	/**
+	 * This is the main runner method for the sudoku game user interface.
+	 *
+	 * @param args input arguments
+	 */
 	public static void main(final String... args) {
 		SwingUtilities.invokeLater(new SudokuMain());
 	}
 
 	@Override
 	public void run() {
-		final SudokuRepository sudokuRepository = new SudokuRepository();
-		final SudokuPuzzle sudokuPuzzle = sudokuRepository.getPuzzle(0);
+		final SudokuPuzzle sudokuPuzzle = SudokuRepository.INSTANCE.getPuzzle(0);
 		new SudokuFrame(sudokuPuzzle);
 	}
 }

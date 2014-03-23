@@ -9,9 +9,11 @@ import java.util.Map;
 
 public class SudokuRepository {
 
+	public static final SudokuRepository INSTANCE = new SudokuRepository();
+
 	private final SudokuPuzzle samplePuzzle;
 
-	public SudokuRepository() {
+	private SudokuRepository() {
 		samplePuzzle = new SudokuPuzzle(getCellMap());
 	}
 

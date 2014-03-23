@@ -7,6 +7,9 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * The {@code ResetButtonListener} is a change listener for the reset button used in the sudoku game user interface.
+ */
 public class ResetButtonListener implements ChangeListener {
 
 	private final JToggleButton resetPuzzleButton;
@@ -14,6 +17,13 @@ public class ResetButtonListener implements ChangeListener {
 	private final SudokuFrame frame;
 	private final SudokuPuzzle puzzle;
 
+	/**
+	 * Public constructor.
+	 *
+	 * @param resetPuzzleButton the reset toggle button
+	 * @param frame             the frame
+	 * @param puzzle            the puzzle
+	 */
 	public ResetButtonListener(final JToggleButton resetPuzzleButton, final SudokuFrame frame, final SudokuPuzzle puzzle) {
 		this.resetPuzzleButton = resetPuzzleButton;
 		this.frame = frame;
@@ -27,5 +37,14 @@ public class ResetButtonListener implements ChangeListener {
 			frame.repaintPanel();
 			resetPuzzleButton.setSelected(false);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ResetButtonListener{"
+				+ "resetPuzzleButton=" + resetPuzzleButton
+				+ ", frame=" + frame
+				+ ", puzzle=" + puzzle
+				+ '}';
 	}
 }

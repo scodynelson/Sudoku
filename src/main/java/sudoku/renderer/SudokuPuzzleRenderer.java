@@ -7,10 +7,16 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Map;
 
+/**
+ * The {@code SudokuPuzzleRenderer} object is used for rendering a sudoku puzzle for the sudoku game.
+ */
 public class SudokuPuzzleRenderer implements SudokuRenderer<SudokuPuzzle> {
 
 	public static final SudokuPuzzleRenderer INSTANCE = new SudokuPuzzleRenderer();
 
+	/**
+	 * Private constructor.
+	 */
 	private SudokuPuzzleRenderer() {
 	}
 

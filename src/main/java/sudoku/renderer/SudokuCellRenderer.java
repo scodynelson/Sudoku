@@ -14,10 +14,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code SudokuCellRenderer} object is used for rendering a sudoku cell for the sudoku game.
+ */
 public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 	public static final SudokuCellRenderer INSTANCE = new SudokuCellRenderer();
 
+	/**
+	 * Private constructor.
+	 */
 	private SudokuCellRenderer() {
 	}
 

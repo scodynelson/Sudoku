@@ -33,4 +33,7 @@ public class SudokuPuzzle implements Serializable {
 			cell.reset();
 		}
 	}
+
+	public final void validate() {
+	}
 }

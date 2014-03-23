@@ -13,22 +13,33 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
 
+/**
+ * The {@code SudokuFrame} object creates a sudoku board frame for the sudoku game user interface.
+ */
 public class SudokuFrame implements Serializable {
 
 	private static final long serialVersionUID = 5661505075061593233L;
 
-	private final SudokuPuzzle model;
+	private final SudokuPuzzle puzzle;
 
 	private JFrame frame;
 	private SudokuPanel panel;
 
-	public SudokuFrame(final SudokuPuzzle model) {
-		this.model = model;
+	/**
+	 * Public constructor.
+	 *
+	 * @param puzzle the puzzle to use
+	 */
+	public SudokuFrame(final SudokuPuzzle puzzle) {
+		this.puzzle = puzzle;
 		init();
 	}
 
+	/**
+	 * Initialization method.
+	 */
 	private void init() {
-		panel = new SudokuPanel(this, model);
+		panel = new SudokuPanel(this, puzzle);
 
 		frame = new JFrame();
 		frame.setTitle(SudokuResources.get("sudoku.frame.title"));
@@ -46,7 +57,7 @@ public class SudokuFrame implements Serializable {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(panel);
 
-		final ButtonPanel buttonPanel = new ButtonPanel(this, model);
+		final ButtonPanel buttonPanel = new ButtonPanel(this, puzzle);
 
 		final JPanel holderPanel = new JPanel(new FlowLayout());
 		holderPanel.add(buttonPanel.getPanel());
@@ -59,6 +70,11 @@ public class SudokuFrame implements Serializable {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * This private method is used to get the rectangular bounds for initializing the frame.
+	 *
+	 * @return the rectangular bounds for the frame
+	 */
 	private Rectangle getBounds() {
 		final Rectangle bounds = frame.getBounds();
 		final Rectangle windowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -67,11 +83,28 @@ public class SudokuFrame implements Serializable {
 		return bounds;
 	}
 
+	/**
+	 * Getter for the frame value.
+	 *
+	 * @return the frame value
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * This method is used to repaint the board with any updated values.
+	 */
 	public void repaintPanel() {
 		panel.repaint();
+	}
+
+	@Override
+	public String toString() {
+		return "SudokuFrame{"
+				+ "puzzle=" + puzzle
+				+ ", frame=" + frame
+				+ ", panel=" + panel
+				+ '}';
 	}
 }
