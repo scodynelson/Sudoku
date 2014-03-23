@@ -24,6 +24,7 @@ public class SudokuPuzzleRenderer implements SudokuRenderer<SudokuPuzzle> {
 	public void render(final SudokuPuzzle object, final Graphics g) {
 		final Map<Point, SudokuCell> cellMap = object.getCellMap();
 		for (final SudokuCell cell : cellMap.values()) {
+			object.removeValues(cell);
 			SudokuCellRenderer.INSTANCE.render(cell, g);
 		}
 	}

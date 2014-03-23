@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Map;
 
 /**
  * The {@code SetValueMouseAdapter} is a mouse adapter for input into the cells in the sudoku game user interface.
@@ -37,13 +36,13 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	public void mousePressed(final MouseEvent e) {
 		final Point point = e.getPoint();
 
-		final SudokuCell sudokuCell = puzzle.getCellAtPoint(point);
-		if (sudokuCell != null) {
-			final int value = getValue(sudokuCell);
+		final SudokuCell cell = puzzle.getCellAtPoint(point);
+		if (cell != null) {
+			final int value = getValue(cell);
 			if (value > 0) {
-				sudokuCell.setGuessValue(value);
-				removeValue(puzzle.getCellMap(), value, sudokuCell.getCellLocation());
-				sudokuCell.clearPossibleValues();
+				cell.setGuessValue(value);
+				puzzle.removeValues(cell);
+				cell.clearPossibleValues();
 				frame.repaintPanel();
 			}
 		}
@@ -88,35 +87,6 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			return value;
 		}
 		return 0;
-	}
-
-	private static void removeValue(final Map<Point, SudokuCell> cellMap, final int value, final Point point) {
-		final int puzzleWidth = SudokuConstants.PUZZLE_WIDTH;
-
-		// Remove from Y axis
-		for (int i = 0; i < puzzleWidth; i++) {
-			final Point pointToGet = new Point(i, point.y);
-			final SudokuCell currentCell = cellMap.get(pointToGet);
-			currentCell.removePossibleValue(value);
-		}
-
-		// Remove from X axis
-		for (int j = 0; j < puzzleWidth; j++) {
-			final Point pointToGet = new Point(point.x, j);
-			final SudokuCell currentCell = cellMap.get(pointToGet);
-			currentCell.removePossibleValue(value);
-		}
-
-		// Remove from internal block
-		final int internalI = point.x / 3;
-		final int internalJ = point.y / 3;
-		for (int i = internalI * 3; i < ((internalI + 1) * 3); i++) {
-			for (int j = internalJ * 3; j < ((internalJ + 1) * 3); j++) {
-				final Point pointToGet = new Point(i, j);
-				final SudokuCell currentCell = cellMap.get(pointToGet);
-				currentCell.removePossibleValue(value);
-			}
-		}
 	}
 
 	@Override
