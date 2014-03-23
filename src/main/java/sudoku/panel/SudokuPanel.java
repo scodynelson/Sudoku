@@ -40,7 +40,7 @@ public class SudokuPanel extends JPanel {
 	@Override
 	protected void paintComponent(final Graphics g) {
 		super.paintComponent(g);
-		SudokuPuzzleRenderer.INSTANCE.draw(puzzle, g);
+		SudokuPuzzleRenderer.INSTANCE.render(puzzle, g);
 	}
 
 	@Override

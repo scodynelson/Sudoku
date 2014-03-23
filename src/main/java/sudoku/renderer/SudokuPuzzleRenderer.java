@@ -21,10 +21,10 @@ public class SudokuPuzzleRenderer implements SudokuRenderer<SudokuPuzzle> {
 	}
 
 	@Override
-	public void draw(final SudokuPuzzle object, final Graphics g) {
+	public void render(final SudokuPuzzle object, final Graphics g) {
 		final Map<Point, SudokuCell> cellMap = object.getCellMap();
 		for (final SudokuCell cell : cellMap.values()) {
-			SudokuCellRenderer.INSTANCE.draw(cell, g);
+			SudokuCellRenderer.INSTANCE.render(cell, g);
 		}
 	}
 }

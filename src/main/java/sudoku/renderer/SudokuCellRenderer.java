@@ -1,7 +1,7 @@
 package sudoku.renderer;
 
 import sudoku.model.SudokuCell;
-import sudoku.model.SudokuCellBorder;
+import sudoku.model.SudokuCellBorderType;
 import sudoku.resources.SudokuConstants;
 
 import java.awt.Color;
@@ -29,7 +29,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	}
 
 	@Override
-	public void draw(final SudokuCell object, final Graphics g) {
+	public void render(final SudokuCell object, final Graphics g) {
 
 		final int widthHeight = SudokuConstants.DRAW_WIDTH;
 		final Rectangle bounds = object.getBounds();
@@ -42,7 +42,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		g.setColor(Color.BLACK);
 		g.drawRect(x, y, widthHeight, widthHeight);
 
-		final SudokuCellBorder cellBorder = object.getCellBorder();
+		final SudokuCellBorderType cellBorder = object.getCellBorderType();
 		drawBorder(g, x, y, widthHeight, cellBorder);
 
 		final Font font = g.getFont();
@@ -90,7 +90,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	}
 
 	private static void drawBorder(final Graphics g, final int x, final int y, final int width,
-								   final SudokuCellBorder cellBorder) {
+								   final SudokuCellBorderType cellBorder) {
 		switch (cellBorder) {
 			case TOP_LEFT:
 				drawLeftBorder(g, x, y, width);

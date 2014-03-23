@@ -14,7 +14,7 @@ public class SudokuCell implements Serializable {
 
 	private final int value;
 	private final boolean isInitial;
-	private final SudokuCellBorder cellBorder;
+	private final SudokuCellBorderType cellBorderType;
 	private final Point cellLocation;
 	private final Rectangle bounds;
 
@@ -22,11 +22,11 @@ public class SudokuCell implements Serializable {
 
 	private int guessValue;
 
-	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorder cellBorder,
+	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorderType cellBorderType,
 					  final Point cellLocation) {
 		this.value = value;
 		this.isInitial = isInitial;
-		this.cellBorder = cellBorder;
+		this.cellBorderType = cellBorderType;
 
 		this.cellLocation = cellLocation;
 		bounds = getRectangle(cellLocation);
@@ -64,8 +64,8 @@ public class SudokuCell implements Serializable {
 		return isInitial;
 	}
 
-	public SudokuCellBorder getCellBorder() {
-		return cellBorder;
+	public SudokuCellBorderType getCellBorderType() {
+		return cellBorderType;
 	}
 
 	public Point getCellLocation() {
