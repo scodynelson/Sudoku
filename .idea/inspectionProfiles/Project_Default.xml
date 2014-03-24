@@ -305,7 +305,11 @@
     </inspection_tool>
     <inspection_tool class="FunctionWithInconsistentReturnsJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GrFieldAlreadyDefined" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyAnnotationNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyAnnotationNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
+      <option name="m_minLength" value="8" />
+      <option name="m_maxLength" value="64" />
+    </inspection_tool>
     <inspection_tool class="GroovyAssignmentCanBeOperatorAssignment" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoreLazyOperators" value="true" />
       <option name="ignoreObscureOperators" value="false" />
@@ -314,7 +318,11 @@
     <inspection_tool class="GroovyAssignmentToMethodParameter" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyBreak" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyBusyWait" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyClassNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyClassNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
+      <option name="m_minLength" value="8" />
+      <option name="m_maxLength" value="64" />
+    </inspection_tool>
     <inspection_tool class="GroovyConditional" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyConditionalCanBeConditionalCall" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyConditionalCanBeElvis" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -337,17 +345,31 @@
       <option name="m_minLength" value="8" />
       <option name="m_maxLength" value="64" />
     </inspection_tool>
-    <inspection_tool class="GroovyIfStatementWithTooManyBranches" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyInstanceMethodNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyIfStatementWithTooManyBranches" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_limit" value="3" />
+    </inspection_tool>
+    <inspection_tool class="GroovyInstanceMethodNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[a-z][A-Za-z\d]*" />
+      <option name="m_minLength" value="4" />
+      <option name="m_maxLength" value="32" />
+    </inspection_tool>
     <inspection_tool class="GroovyInstanceVariableNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_regex" value="m_[a-z][A-Za-z\d]*" />
       <option name="m_minLength" value="1" />
       <option name="m_maxLength" value="32" />
     </inspection_tool>
-    <inspection_tool class="GroovyInterfaceNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyInterfaceNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
+      <option name="m_minLength" value="8" />
+      <option name="m_maxLength" value="64" />
+    </inspection_tool>
     <inspection_tool class="GroovyListGetCanBeKeyedAccess" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyListSetCanBeKeyedAccess" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyLocalVariableNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyLocalVariableNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[a-z][A-Za-z\d]*" />
+      <option name="m_minLength" value="4" />
+      <option name="m_maxLength" value="32" />
+    </inspection_tool>
     <inspection_tool class="GroovyLoopStatementThatDoesntLoop" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyMapGetCanBeKeyedAccess" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyMapPutCanBeKeyedAccess" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -360,9 +382,17 @@
     <inspection_tool class="GroovyNonShortCircuitBoolean" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyNotifyWhileNotSynchronized" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyOctalInteger" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyOverlyComplexArithmeticExpression" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyOverlyComplexBooleanExpression" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyParameterNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyOverlyComplexArithmeticExpression" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_limit" value="3" />
+    </inspection_tool>
+    <inspection_tool class="GroovyOverlyComplexBooleanExpression" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_limit" value="3" />
+    </inspection_tool>
+    <inspection_tool class="GroovyParameterNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[a-z][A-Za-z\d]*" />
+      <option name="m_minLength" value="4" />
+      <option name="m_maxLength" value="32" />
+    </inspection_tool>
     <inspection_tool class="GroovyPointlessArithmetic" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyPublicFieldAccessedInSynchronizedContext" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyRangeTypeCheck" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -370,8 +400,16 @@
     <inspection_tool class="GroovyResultOfIncrementOrDecrementUsed" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyReturnFromClosureCanBeImplicit" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyReturnFromFinallyBlock" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyStaticMethodNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyStaticVariableNamingConvention" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyStaticMethodNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="[a-z][A-Za-z\d]*" />
+      <option name="m_minLength" value="4" />
+      <option name="m_maxLength" value="32" />
+    </inspection_tool>
+    <inspection_tool class="GroovyStaticVariableNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_regex" value="s_[a-z][A-Za-z\d]*" />
+      <option name="m_minLength" value="4" />
+      <option name="m_maxLength" value="32" />
+    </inspection_tool>
     <inspection_tool class="GroovySwitchStatementWithNoDefault" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovySynchronizationOnThis" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovySynchronizedMethod" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -382,7 +420,9 @@
     <inspection_tool class="GroovyUntypedAccess" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyWaitCallNotInLoop" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="GroovyWaitWhileNotSynchronized" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="GroovyWhileLoopSpinsOnField" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="GroovyWhileLoopSpinsOnField" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoreNonEmtpyLoops" value="false" />
+    </inspection_tool>
     <inspection_tool class="HardcodedLineSeparators" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="HashCodeUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="HibernateResource" enabled="true" level="WARNING" enabled_by_default="true">
@@ -397,7 +437,9 @@
     <inspection_tool class="IfMayBeConditional" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="IfStatementWithIdenticalBranches" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="IfStatementWithIdenticalBranchesJS" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="IfStatementWithTooManyBranchesJS" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="IfStatementWithTooManyBranchesJS" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_limit" value="3" />
+    </inspection_tool>
     <inspection_tool class="IgnoredJUnitTest" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ImplicitNumericConversion" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoreWideningConversions" value="true" />
@@ -982,7 +1024,9 @@
       <option name="m_ignoreCatchBlocksWithComments" value="false" />
       <option name="m_ignoreTestCases" value="false" />
     </inspection_tool>
-    <inspection_tool class="UnusedCatchParameterJS" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="UnusedCatchParameterJS" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="m_ignoreCatchBlocksWithComments" value="false" />
+    </inspection_tool>
     <inspection_tool class="UnusedDefine" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="UnusedImport" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="UnusedLibrary" enabled="true" level="WARNING" enabled_by_default="true" />

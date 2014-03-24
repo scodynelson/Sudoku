@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code SudokuCell} object is a representation of a sudoku cell for the sudoku game.
+ */
 public class SudokuCell implements Serializable {
 
 	private static final long serialVersionUID = -8840221914149844975L;
@@ -15,38 +18,50 @@ public class SudokuCell implements Serializable {
 	private final int value;
 	private final boolean isInitial;
 	private final SudokuCellBorderType cellBorderType;
-	private final Point cellLocation;
+	private final Point point;
 	private final Rectangle bounds;
-
-	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
 
 	private int guessValue;
 
-	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorderType cellBorderType,
-					  final Point cellLocation) {
+	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
+
+	/**
+	 * Public constructor.
+	 *
+	 * @param value          the value of the cell
+	 * @param isInitial      whether or not the cell is initially filled
+	 * @param cellBorderType the border type of the cell
+	 * @param point          the point location of the cell
+	 */
+	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorderType cellBorderType, final Point point) {
 		this.value = value;
 		this.isInitial = isInitial;
 		this.cellBorderType = cellBorderType;
-
-		this.cellLocation = cellLocation;
-		bounds = getRectangle(cellLocation);
+		this.point = point;
+		bounds = getRectangle(point);
 
 		reset();
 	}
 
-	private static Rectangle getRectangle(final Point cellLocation) {
+	/**
+	 * This private method gets a matching rectangle from the provided {@code point}.
+	 *
+	 * @param point the point location of the cell
+	 * @return the matching rectangle from the provided {@code point}
+	 */
+	private static Rectangle getRectangle(final Point point) {
+		final int drawWidthHeight = SudokuConstants.DRAW_WIDTH;
 
-		final int row = cellLocation.x;
-		final int column = cellLocation.y;
+		// TODO: fix this 'X' and 'Y' mismatch
+		final int x = point.y * drawWidthHeight;
+		final int y = point.x * drawWidthHeight;
 
-		final int drawWidth = SudokuConstants.DRAW_WIDTH;
-
-		final int x = column * drawWidth;
-		final int y = row * drawWidth;
-
-		return new Rectangle(x, y, drawWidth, drawWidth);
+		return new Rectangle(x, y, drawWidthHeight, drawWidthHeight);
 	}
 
+	/**
+	 * This method resets the cell to its original state.
+	 */
 	public final void reset() {
 		guessValue = 0;
 		possibleValues.clear();
@@ -56,55 +71,124 @@ public class SudokuCell implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter for cellMap value.
+	 *
+	 * @return the cellMap value
+	 */
 	public int getValue() {
 		return value;
 	}
 
+	/**
+	 * Getter for isInitial value.
+	 *
+	 * @return the isInitial value
+	 */
 	public boolean isInitial() {
 		return isInitial;
 	}
 
+	/**
+	 * Getter for cellBorderType value.
+	 *
+	 * @return the cellBorderType value
+	 */
 	public SudokuCellBorderType getCellBorderType() {
 		return cellBorderType;
 	}
 
-	public Point getCellLocation() {
-		return cellLocation;
+	/**
+	 * Getter for point value.
+	 *
+	 * @return the point value
+	 */
+	public Point getPoint() {
+		return point;
 	}
 
+	/**
+	 * Getter for bounds value.
+	 *
+	 * @return the bounds value
+	 */
 	public Rectangle getBounds() {
 		return bounds;
 	}
 
+	/**
+	 * Getter for cellMap value.
+	 *
+	 * @return the cellMap value
+	 */
 	public int getGuessValue() {
 		return guessValue;
 	}
 
+	/**
+	 * Setter for guessValue value.
+	 *
+	 * @param guessValue the new guessValue value
+	 */
 	public void setGuessValue(final int guessValue) {
 		this.guessValue = guessValue;
 	}
 
+	/**
+	 * Getter for possibleValues value.
+	 *
+	 * @return the possibleValues value
+	 */
 	public List<Integer> getPossibleValues() {
 		return possibleValues;
 	}
 
-	public int getPossibleValuesCount() {
-		return possibleValues.size();
-	}
-
-	public boolean isPossibleValue(final Integer possibleValue) {
+	/**
+	 * Determines whether or not the provided {@code possibleValue} is within the {@code possibleValues} list.
+	 *
+	 * @param possibleValue the possible value search for
+	 * @return true if the {@code possibleValue} is within the {@code possibleValues}, false otherwise
+	 */
+	public boolean isPossibleValue(final Integer possibleValue) { // NOTE: Use Object Integer so we don't go for index
 		return possibleValues.contains(possibleValue);
 	}
 
-	public void removePossibleValue(final Integer possibleValue) {
+	/**
+	 * Removes provided {@code possibleValue} from the {@code possibleValues} list.
+	 *
+	 * @param possibleValue the possible value to remove
+	 */
+	public void removePossibleValue(final Integer possibleValue) { // NOTE: Use Object Integer so we don't go for index
 		possibleValues.remove(possibleValue);
 	}
 
+	/**
+	 * Clears the {@code possibleValues} list.
+	 */
 	public void clearPossibleValues() {
 		possibleValues.clear();
 	}
 
-	public boolean contains(final Point point) {
-		return bounds.contains(point);
+	/**
+	 * Checks to see if the {@code pointToCheck} is contained within {@code bounds} for the cell.
+	 *
+	 * @param pointToCheck the point to check is within the {@code bounds}
+	 * @return true if the {@code pointToCheck} is contained within {@code bounds}, false otherwise
+	 */
+	public boolean contains(final Point pointToCheck) {
+		return bounds.contains(pointToCheck);
+	}
+
+	@Override
+	public String toString() {
+		return "SudokuCell{"
+				+ "value=" + value
+				+ ", isInitial=" + isInitial
+				+ ", cellBorderType=" + cellBorderType
+				+ ", point=" + point
+				+ ", bounds=" + bounds
+				+ ", guessValue=" + guessValue
+				+ ", possibleValues=" + possibleValues
+				+ '}';
 	}
 }

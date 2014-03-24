@@ -186,8 +186,8 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		int stringIndex = 0;
 
 		final List<Integer> possibleValues = sudokuCell.getPossibleValues();
-		for (int index = 0; index < sudokuCell.getPossibleValuesCount(); index++) {
-			builder.append(possibleValues.get(index));
+		for (final Integer possibleValue : possibleValues) {
+			builder.append(possibleValue);
 			if (stringIndex < 2) {
 				builder.append(' ');
 				stringIndex++;
