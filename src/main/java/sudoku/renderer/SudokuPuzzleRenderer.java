@@ -4,8 +4,7 @@ import sudoku.model.SudokuCell;
 import sudoku.model.SudokuPuzzle;
 
 import java.awt.Graphics;
-import java.awt.Point;
-import java.util.Map;
+import java.util.List;
 
 /**
  * The {@code SudokuPuzzleRenderer} object is used for rendering a sudoku puzzle for the sudoku game.
@@ -22,9 +21,8 @@ public class SudokuPuzzleRenderer implements SudokuRenderer<SudokuPuzzle> {
 
 	@Override
 	public void render(final SudokuPuzzle object, final Graphics g) {
-		final Map<Point, SudokuCell> cellMap = object.getCellMap();
-		for (final SudokuCell cell : cellMap.values()) {
-			object.removeValues(cell);
+		final List<SudokuCell> cells = object.getCells();
+		for (final SudokuCell cell : cells) {
 			SudokuCellRenderer.INSTANCE.render(cell, g);
 		}
 	}

@@ -1,10 +1,8 @@
 package sudoku.model;
 
-import sudoku.resources.SudokuConstants;
-
 import java.awt.Point;
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 /**
  * The {@code SudokuPuzzle} object is a representation of a sudoku puzzle for the sudoku game.
@@ -13,27 +11,28 @@ public class SudokuPuzzle implements Serializable {
 
 	private static final long serialVersionUID = -6545823351348099121L;
 
+	private static final double THREE_DOUBLE = 3.0;
 	private static final int THREE_INT = 3; // Because the internal block is 3x3
 
-	private final Map<Point, SudokuCell> cellMap;
+	private final List<SudokuCell> cells;
 
 	/**
 	 * Public constructor.
 	 *
-	 * @param cellMap a mapping of points to corresponding cells
+	 * @param cells a list cells
 	 */
-	public SudokuPuzzle(final Map<Point, SudokuCell> cellMap) {
-		this.cellMap = cellMap;
+	public SudokuPuzzle(final List<SudokuCell> cells) {
+		this.cells = cells;
 		reset();
 	}
 
 	/**
-	 * Getter for cellMap value.
+	 * Getter for cells value.
 	 *
-	 * @return the cellMap value
+	 * @return the cells value
 	 */
-	public Map<Point, SudokuCell> getCellMap() {
-		return cellMap;
+	public List<SudokuCell> getCells() {
+		return cells;
 	}
 
 	/**
@@ -43,7 +42,7 @@ public class SudokuPuzzle implements Serializable {
 	 * @return the cell at the provided {@code point}, or 'null' if no cell is found.
 	 */
 	public SudokuCell getCellAtPoint(final Point point) {
-		for (final SudokuCell cell : cellMap.values()) {
+		for (final SudokuCell cell : cells) {
 			if (cell.contains(point)) {
 				return cell;
 			}
@@ -55,8 +54,13 @@ public class SudokuPuzzle implements Serializable {
 	 * This method resets the puzzle to its original state.
 	 */
 	public final void reset() {
-		for (final SudokuCell cell : cellMap.values()) {
+		// Reset the cells
+		for (final SudokuCell cell : cells) {
 			cell.reset();
+		}
+		// Remove the duplicate values
+		for (final SudokuCell cell : cells) {
+			removeValues(cell);
 		}
 	}
 
@@ -72,41 +76,54 @@ public class SudokuPuzzle implements Serializable {
 	 * @param cell the cell containing the value to remove and the point location for X and Y reference
 	 */
 	public void removeValues(final SudokuCell cell) {
-		final int puzzleWidth = SudokuConstants.PUZZLE_WIDTH;
 
 		final Point point = cell.getPoint();
 		final int value = cell.isInitial() ? cell.getValue() : cell.getGuessValue();
 
-		// Remove from Y axis
-		for (int i = 0; i < puzzleWidth; i++) {
-			final Point pointToGet = new Point(i, point.y);
-			final SudokuCell currentCell = cellMap.get(pointToGet);
-			currentCell.removePossibleValue(value);
-		}
-
-		// Remove from X axis
-		for (int j = 0; j < puzzleWidth; j++) {
-			final Point pointToGet = new Point(point.x, j);
-			final SudokuCell currentCell = cellMap.get(pointToGet);
-			currentCell.removePossibleValue(value);
+		// Remove from X and Y axis
+		for (final SudokuCell currentCell : cells) {
+			final Point currentPoint = currentCell.getPoint();
+			if ((currentPoint.x == point.x) || (currentPoint.y == point.y)) {
+				currentCell.removePossibleValue(value);
+			}
 		}
 
 		// Remove from internal block
-		final int internalI = point.x / THREE_INT;
-		final int internalJ = point.y / THREE_INT;
-		for (int i = internalI * THREE_INT; i < ((internalI + 1) * THREE_INT); i++) {
-			for (int j = internalJ * THREE_INT; j < ((internalJ + 1) * THREE_INT); j++) {
-				final Point pointToGet = new Point(i, j);
-				final SudokuCell currentCell = cellMap.get(pointToGet);
+		final Double xOver3 = Math.floor(point.x / THREE_DOUBLE);
+		final int xOver3AsInt = xOver3.intValue();
+		final int minX = xOver3AsInt * THREE_INT;
+		final int maxX = ((xOver3AsInt + 1) * THREE_INT) - 1;
+
+		final Double yOver3 = Math.floor(point.y / THREE_DOUBLE);
+		final int yOver3AsInt = yOver3.intValue();
+		final int minY = yOver3AsInt * THREE_INT;
+		final int maxY = ((yOver3AsInt + 1) * THREE_INT) - 1;
+
+		for (final SudokuCell currentCell : cells) {
+			final Point currentPoint = currentCell.getPoint();
+			if (isBetweenInclusive(currentPoint.x, minX, maxX) && isBetweenInclusive(currentPoint.y, minY, maxY)) {
 				currentCell.removePossibleValue(value);
 			}
 		}
 	}
 
+	/**
+	 * Private method used to test inclusion of the provided {@code value} between the provided {@code min} and {@code max}
+	 * values.
+	 *
+	 * @param value the value to check for inclusion
+	 * @param min   the minimum the integer can be
+	 * @param max   the maximum the integer can be
+	 * @return true of the integer is inclusively between the provided {@code min} and {@code max} values
+	 */
+	private static boolean isBetweenInclusive(final int value, final int min, final int max) {
+		return (min <= value) && (value <= max);
+	}
+
 	@Override
 	public String toString() {
 		return "SudokuPuzzle{"
-				+ "cellMap=" + cellMap
+				+ "cells=" + cells
 				+ '}';
 	}
 }

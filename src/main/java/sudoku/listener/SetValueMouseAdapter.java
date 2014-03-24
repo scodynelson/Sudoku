@@ -39,7 +39,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 		final SudokuCell cell = puzzle.getCellAtPoint(point);
 		if (cell != null) {
 			final int value = getValue(cell);
-			if (value > 0) {
+			if (value > 0) { // Cancel button
 				cell.setGuessValue(value);
 				puzzle.removeValues(cell);
 				cell.clearPossibleValues();

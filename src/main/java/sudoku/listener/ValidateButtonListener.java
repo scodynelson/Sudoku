@@ -25,9 +25,9 @@ public class ValidateButtonListener implements ChangeListener {
 	 * @param puzzle               the puzzle
 	 */
 	public ValidateButtonListener(final JToggleButton validatePuzzleButton, final SudokuFrame frame, final SudokuPuzzle puzzle) {
+		this.validatePuzzleButton = validatePuzzleButton;
 		this.frame = frame;
 		this.puzzle = puzzle;
-		this.validatePuzzleButton = validatePuzzleButton;
 	}
 
 	@Override

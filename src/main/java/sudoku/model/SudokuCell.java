@@ -51,10 +51,8 @@ public class SudokuCell implements Serializable {
 	 */
 	private static Rectangle getRectangle(final Point point) {
 		final int drawWidthHeight = SudokuConstants.DRAW_WIDTH;
-
-		// TODO: fix this 'X' and 'Y' mismatch
-		final int x = point.y * drawWidthHeight;
-		final int y = point.x * drawWidthHeight;
+		final int x = point.x * drawWidthHeight;
+		final int y = point.y * drawWidthHeight;
 
 		return new Rectangle(x, y, drawWidthHeight, drawWidthHeight);
 	}
