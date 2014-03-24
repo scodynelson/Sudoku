@@ -3,7 +3,6 @@ package sudoku.panel;
 import sudoku.SudokuFrame;
 import sudoku.listener.ResetButtonListener;
 import sudoku.listener.ToggleListener;
-import sudoku.listener.ValidateButtonListener;
 import sudoku.model.SudokuPuzzle;
 import sudoku.resources.SudokuConstants;
 
@@ -25,7 +24,7 @@ public class ButtonPanel implements Serializable {
 	private final SudokuPuzzle puzzle;
 
 	private JToggleButton resetPuzzleButton;
-	private JToggleButton validatePuzzleButton;
+//	private JToggleButton validatePuzzleButton;
 
 	private JPanel panel;
 
@@ -50,12 +49,12 @@ public class ButtonPanel implements Serializable {
 		panel.setLayout(new GridBagLayout());
 
 		resetPuzzleButton = new JToggleButton(SudokuConstants.RESET_BUTTON_TEXT);
-		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
-		final ToggleListener toggleListener = new ToggleListener(resetPuzzleButton, validatePuzzleButton);
+//		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
+		final ToggleListener toggleListener = new ToggleListener(resetPuzzleButton);
 
 		int gridY = 0;
 		initResetButton(toggleListener, gridY++);
-		initValidateButton(toggleListener, gridY++);
+//		initValidateButton(toggleListener, gridY++);
 	}
 
 	/**
@@ -68,8 +67,7 @@ public class ButtonPanel implements Serializable {
 	private void initResetButton(final ToggleListener toggleListener, final int gridY) {
 		resetPuzzleButton.addChangeListener(toggleListener);
 		resetPuzzleButton.addChangeListener(new ResetButtonListener(resetPuzzleButton, frame, puzzle));
-		addButtonToPanel(panel, resetPuzzleButton, 0, gridY, 1, 1,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL);
+		addButtonToPanel(panel, resetPuzzleButton, gridY);
 	}
 
 	/**
@@ -79,12 +77,11 @@ public class ButtonPanel implements Serializable {
 	 * @param toggleListener the change listener for the "validate" button
 	 * @param gridY          the 'y' location on the grid where the "validate" button will be located
 	 */
-	private void initValidateButton(final ToggleListener toggleListener, final int gridY) {
-		validatePuzzleButton.addChangeListener(toggleListener);
-		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
-		addButtonToPanel(panel, validatePuzzleButton, 0, gridY, 1, 1,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL);
-	}
+//	private void initValidateButton(final ToggleListener toggleListener, final int gridY) {
+//		validatePuzzleButton.addChangeListener(toggleListener);
+//		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
+//		addButtonToPanel(panel, validatePuzzleButton, gridY);
+//	}
 
 	/**
 	 * This private static method adds the provided {@code toggleButton} to the provided {@code panel} creating a set of
@@ -92,20 +89,14 @@ public class ButtonPanel implements Serializable {
 	 *
 	 * @param panel        the panel to add the toggleButton to
 	 * @param toggleButton the toggleButton to add to the panel
-	 * @param gridX        the x location on the grid
 	 * @param gridY        the y location on the grid
-	 * @param gridWidth    the grid width
-	 * @param gridHeight   the grid height
-	 * @param anchor       the grid anchor
-	 * @param fill         the grid fill
 	 */
-	private static void addButtonToPanel(final JPanel panel, final JToggleButton toggleButton,
-										 final int gridX, final int gridY, final int gridWidth, final int gridHeight,
-										 final int anchor, final int fill) {
+	private static void addButtonToPanel(final JPanel panel, final JToggleButton toggleButton, final int gridY) {
 
 		final Insets insets = new Insets(10, 10, 0, 10);
 		final GridBagConstraints gridBagConstraints =
-				new GridBagConstraints(gridX, gridY, gridWidth, gridHeight, 1.0D, 1.0D, anchor, fill, insets, 0, 0);
+				new GridBagConstraints(0, gridY, 1, 1, 1.0D, 1.0D, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+						insets, 0, 0);
 		panel.add(toggleButton, gridBagConstraints);
 	}
 
@@ -124,7 +115,7 @@ public class ButtonPanel implements Serializable {
 				+ "frame=" + frame
 				+ ", puzzle=" + puzzle
 				+ ", resetPuzzleButton=" + resetPuzzleButton
-				+ ", validatePuzzleButton=" + validatePuzzleButton
+//				+ ", validatePuzzleButton=" + validatePuzzleButton
 				+ ", panel=" + panel
 				+ '}';
 	}

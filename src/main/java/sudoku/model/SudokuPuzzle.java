@@ -68,6 +68,7 @@ public class SudokuPuzzle implements Serializable {
 	 * This method validates the current puzzle state.
 	 */
 	public final void validate() {
+		throw new UnsupportedOperationException("Validate not yet supported.");
 	}
 
 	/**

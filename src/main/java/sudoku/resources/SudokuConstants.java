@@ -1,5 +1,8 @@
 package sudoku.resources;
 
+/**
+ * The {@code SudokuConstants} interface defines constants for all external resources for use in the application.
+ */
 public interface SudokuConstants {
 
 	String FRAME_TITLE = SudokuResources.getString("sudoku.frame.title");

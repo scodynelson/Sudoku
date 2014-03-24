@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The {@code SudokuMockDB} is an abstract class used to house the {@code SAMPLE_PUZZLE} for static use as a mock object.
  */
-public final class SudokuMockDB {
+final class SudokuMockDB {
 
 	static final SudokuPuzzle SAMPLE_PUZZLE = new SudokuPuzzle(getCells());
 

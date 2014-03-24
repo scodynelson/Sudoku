@@ -7,7 +7,7 @@ import java.awt.Graphics;
  *
  * @param <TYPE> the type of object to render
  */
-public interface SudokuRenderer<TYPE> {
+interface SudokuRenderer<TYPE> {
 
 	/**
 	 * The rendering method for rendering the sudoku game object.
