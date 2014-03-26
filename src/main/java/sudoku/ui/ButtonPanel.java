@@ -1,9 +1,10 @@
-package sudoku.panel;
+package sudoku.ui;
 
-import sudoku.listener.HintButtonListener;
-import sudoku.listener.ResetButtonListener;
-import sudoku.listener.ToggleListener;
-import sudoku.listener.ValidateButtonListener;
+import sudoku.ui.SudokuFrame;
+import sudoku.ui.HintButtonListener;
+import sudoku.ui.ResetButtonListener;
+import sudoku.ui.ToggleListener;
+import sudoku.ui.ValidateButtonListener;
 import sudoku.model.SudokuPuzzle;
 import sudoku.resources.SudokuConstants;
 

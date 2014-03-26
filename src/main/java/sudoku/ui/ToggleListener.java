@@ -1,4 +1,4 @@
-package sudoku.listener;
+package sudoku.ui;
 
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;

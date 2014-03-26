@@ -1,8 +1,6 @@
-package sudoku.panel;
+package sudoku.ui;
 
 import sudoku.model.SudokuPuzzle;
-import sudoku.panel.ButtonPanel;
-import sudoku.panel.SudokuPanel;
 import sudoku.resources.SudokuConstants;
 
 import javax.swing.BoxLayout;

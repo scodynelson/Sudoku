@@ -1,7 +1,6 @@
-package sudoku.listener;
+package sudoku.ui;
 
 import org.apache.commons.lang3.Range;
-import sudoku.panel.SudokuFrame;
 import sudoku.model.SudokuCell;
 import sudoku.model.SudokuPuzzle;
 import sudoku.resources.SudokuConstants;

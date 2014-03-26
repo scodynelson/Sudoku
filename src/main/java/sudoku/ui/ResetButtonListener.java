@@ -1,6 +1,5 @@
-package sudoku.listener;
+package sudoku.ui;
 
-import sudoku.panel.SudokuFrame;
 import sudoku.model.SudokuPuzzle;
 
 import javax.swing.JToggleButton;
