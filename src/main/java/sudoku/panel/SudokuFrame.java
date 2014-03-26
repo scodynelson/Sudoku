@@ -1,4 +1,4 @@
-package sudoku;
+package sudoku.panel;
 
 import sudoku.model.SudokuPuzzle;
 import sudoku.panel.ButtonPanel;

@@ -116,6 +116,8 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 				break;
 			case NONE:
 				break;
+			default:
+				break;
 		}
 	}
 

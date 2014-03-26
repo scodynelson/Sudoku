@@ -1,6 +1,5 @@
 package sudoku.panel;
 
-import sudoku.SudokuFrame;
 import sudoku.listener.SetValueMouseAdapter;
 import sudoku.model.SudokuPuzzle;
 import sudoku.renderer.SudokuPuzzleRenderer;

@@ -1,9 +1,9 @@
 package sudoku.panel;
 
-import sudoku.SudokuFrame;
 import sudoku.listener.HintButtonListener;
 import sudoku.listener.ResetButtonListener;
 import sudoku.listener.ToggleListener;
+import sudoku.listener.ValidateButtonListener;
 import sudoku.model.SudokuPuzzle;
 import sudoku.resources.SudokuConstants;
 
@@ -26,7 +26,7 @@ public class ButtonPanel implements Serializable {
 
 	private JToggleButton resetPuzzleButton;
 	private JToggleButton hintPuzzleButton;
-//	private JToggleButton validatePuzzleButton;
+	private JToggleButton validatePuzzleButton;
 
 	private JPanel panel;
 
@@ -52,13 +52,13 @@ public class ButtonPanel implements Serializable {
 
 		resetPuzzleButton = new JToggleButton(SudokuConstants.RESET_BUTTON_TEXT);
 		hintPuzzleButton = new JToggleButton(SudokuConstants.HINT_BUTTON_TEXT);
-//		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
+		validatePuzzleButton = new JToggleButton(SudokuConstants.VALIDATE_BUTTON_TEXT);
 		final ToggleListener toggleListener = new ToggleListener(resetPuzzleButton, hintPuzzleButton);
 
 		int gridY = 0;
 		initResetButton(toggleListener, gridY++);
 		initHintButton(toggleListener, gridY++);
-//		initValidateButton(toggleListener, gridY++);
+		initValidateButton(toggleListener, gridY++);
 	}
 
 	/**
@@ -94,11 +94,11 @@ public class ButtonPanel implements Serializable {
 	 * @param toggleListener the change listener for the "validate" button
 	 * @param gridY          the 'y' location on the grid where the "validate" button will be located
 	 */
-//	private void initValidateButton(final ToggleListener toggleListener, final int gridY) {
-//		validatePuzzleButton.addChangeListener(toggleListener);
-//		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
-//		addButtonToPanel(panel, validatePuzzleButton, gridY);
-//	}
+	private void initValidateButton(final ToggleListener toggleListener, final int gridY) {
+		validatePuzzleButton.addChangeListener(toggleListener);
+		validatePuzzleButton.addChangeListener(new ValidateButtonListener(validatePuzzleButton, frame, puzzle));
+		addButtonToPanel(panel, validatePuzzleButton, gridY);
+	}
 
 	/**
 	 * This private static method adds the provided {@code toggleButton} to the provided {@code panel} creating a set of

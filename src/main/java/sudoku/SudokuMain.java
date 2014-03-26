@@ -1,6 +1,7 @@
 package sudoku;
 
 import sudoku.model.SudokuPuzzle;
+import sudoku.panel.SudokuFrame;
 import sudoku.repository.SudokuRepository;
 
 import javax.swing.SwingUtilities;
