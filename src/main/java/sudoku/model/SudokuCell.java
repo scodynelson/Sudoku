@@ -22,6 +22,7 @@ public class SudokuCell implements Serializable {
 	private final Rectangle bounds;
 
 	private int guessValue;
+	private boolean showHints;
 
 	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
 
@@ -62,6 +63,7 @@ public class SudokuCell implements Serializable {
 	 */
 	public final void reset() {
 		guessValue = 0;
+		showHints = false;
 		possibleValues.clear();
 
 		for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
@@ -133,6 +135,22 @@ public class SudokuCell implements Serializable {
 	}
 
 	/**
+	 * Getter for showHints value.
+	 *
+	 * @return the showHints value
+	 */
+	public boolean isShowHints() {
+		return showHints;
+	}
+
+	/**
+	 * This method toggles the showHints value.
+	 */
+	public void toggleShowHints() {
+		showHints = !showHints;
+	}
+
+	/**
 	 * Getter for possibleValues value.
 	 *
 	 * @return the possibleValues value
@@ -186,6 +204,7 @@ public class SudokuCell implements Serializable {
 				+ ", point=" + point
 				+ ", bounds=" + bounds
 				+ ", guessValue=" + guessValue
+				+ ", showHints=" + showHints
 				+ ", possibleValues=" + possibleValues
 				+ '}';
 	}

@@ -36,6 +36,15 @@ public class SudokuPuzzle implements Serializable {
 	}
 
 	/**
+	 * This method toggles the showHints value.
+	 */
+	public void toggleShowHints() {
+		for (final SudokuCell cell : cells) {
+			cell.toggleShowHints();
+		}
+	}
+
+	/**
 	 * This method finds the cell at the provided {@code point}, or returns 'null' if no cell is found.
 	 *
 	 * @param point the point used to locate the cell

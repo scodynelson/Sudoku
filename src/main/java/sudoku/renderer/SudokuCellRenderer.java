@@ -54,6 +54,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 		final boolean isInitial = object.isInitial();
 		final int guessValue = object.getGuessValue();
+		final boolean isShowHints = object.isShowHints();
 
 		final BufferedImage image;
 		if (isInitial) {
@@ -61,14 +62,18 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 			image = createImage(font, frc, WIDTH_HEIGHT, value, true);
 		} else if (guessValue > 0) {
 			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, false);
-		} else {
+		} else if (isShowHints) {
 			final List<String> possibleValues = concatenatePossibleValues(object);
 			image = createImage(font, frc, possibleValues);
+		} else {
+			image = null;
 		}
 
-		final int xx = x + ((WIDTH_HEIGHT - image.getWidth()) / 2);
-		final int yy = y + ((WIDTH_HEIGHT - image.getHeight()) / 2);
-		g.drawImage(image, xx, yy, null);
+		if (image != null) {
+			final int xx = x + ((WIDTH_HEIGHT - image.getWidth()) / 2);
+			final int yy = y + ((WIDTH_HEIGHT - image.getHeight()) / 2);
+			g.drawImage(image, xx, yy, null);
+		}
 	}
 
 	/**
