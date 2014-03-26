@@ -11,7 +11,6 @@ import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,12 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 	public static final SudokuCellRenderer INSTANCE = new SudokuCellRenderer();
 
+	private static final int WIDTH_HEIGHT = SudokuConstants.DRAW_WIDTH;
+
+	private static final int SIX_INT = 6;
+	private static final float THREE_FLOAT = 3.0F;
+	private static final double TWELVE_DOUBLE = 12.0;
+
 	/**
 	 * Private constructor.
 	 */
@@ -31,154 +36,138 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	@Override
 	public void render(final SudokuCell object, final Graphics g) {
 
-		final int widthHeight = SudokuConstants.DRAW_WIDTH;
 		final Rectangle bounds = object.getBounds();
 		final int x = bounds.x;
 		final int y = bounds.y;
 
 		g.setColor(Color.WHITE);
-		g.fillRect(x, y, widthHeight, widthHeight);
+		g.fillRect(x, y, WIDTH_HEIGHT, WIDTH_HEIGHT);
 
 		g.setColor(Color.BLACK);
-		g.drawRect(x, y, widthHeight, widthHeight);
+		g.drawRect(x, y, WIDTH_HEIGHT, WIDTH_HEIGHT);
 
 		final SudokuCellBorderType cellBorder = object.getCellBorderType();
-		drawBorder(g, x, y, widthHeight, cellBorder);
+		drawBorder(g, x, y, cellBorder);
 
 		final Font font = g.getFont();
 		final FontRenderContext frc = new FontRenderContext(null, true, true);
 
 		final boolean isInitial = object.isInitial();
-		final Integer value = object.getValue();
-		final Integer guessValue = object.getGuessValue();
+		final int guessValue = object.getGuessValue();
 
+		final BufferedImage image;
 		if (isInitial) {
-			final String s = Integer.toString(value);
-
-			final BufferedImage image = createImage(font, frc, widthHeight, s, object.isInitial());
-
-			final int xx = x + ((widthHeight - image.getWidth()) / 2);
-			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			g.drawImage(image, xx, yy, null);
+			final int value = object.getValue();
+			image = createImage(font, frc, WIDTH_HEIGHT, value, true);
 		} else if (guessValue > 0) {
-			final String s = Integer.toString(guessValue);
-
-			final BufferedImage image = createImage(font, frc, widthHeight, s, object.isInitial());
-
-			final int xx = x + ((widthHeight - image.getWidth()) / 2);
-			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			g.drawImage(image, xx, yy, null);
+			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, false);
 		} else {
-			final List<String> list = concatenatePossibleValues(object);
-
-			double imageWidth = 0.0D;
-			double imageHeight = 0.0D;
-			double stringHeight = 0.0D;
-			for (final String s : list) {
-				final Rectangle2D r = font.getStringBounds(s, frc);
-				imageWidth = Math.max(imageWidth, r.getWidth());
-				imageHeight += r.getHeight();
-				stringHeight = Math.max(stringHeight, r.getHeight());
-			}
-
-			final BufferedImage image = createImage(list, imageWidth, imageHeight, stringHeight);
-
-			final int xx = x + ((widthHeight - image.getWidth()) / 2);
-			final int yy = y + ((widthHeight - image.getHeight()) / 2);
-			g.drawImage(image, xx, yy, null);
+			final List<String> possibleValues = concatenatePossibleValues(object);
+			image = createImage(font, frc, possibleValues);
 		}
+
+		final int xx = x + ((WIDTH_HEIGHT - image.getWidth()) / 2);
+		final int yy = y + ((WIDTH_HEIGHT - image.getHeight()) / 2);
+		g.drawImage(image, xx, yy, null);
 	}
 
-	private static void drawBorder(final Graphics g, final int x, final int y, final int width,
-								   final SudokuCellBorderType cellBorder) {
+	/**
+	 * This method renders the borders for a cell.
+	 *
+	 * @param g          the graphic
+	 * @param x          the x value
+	 * @param y          the y value
+	 * @param cellBorder the type of cell boarder to render
+	 */
+	private static void drawBorder(final Graphics g, final int x, final int y, final SudokuCellBorderType cellBorder) {
 		switch (cellBorder) {
 			case TOP_LEFT:
-				drawLeftBorder(g, x, y, width);
-				drawTopBorder(g, x, y, width);
+				drawLeftBorder(g, x, y);
+				drawTopBorder(g, x, y);
 				break;
 			case TOP:
-				drawTopBorder(g, x, y, width);
+				drawTopBorder(g, x, y);
 				break;
 			case TOP_RIGHT:
-				drawTopBorder(g, x, y, width);
-				drawRightBorder(g, x, y, width);
+				drawTopBorder(g, x, y);
+				drawRightBorder(g, x, y);
 				break;
 			case LEFT:
-				drawLeftBorder(g, x, y, width);
+				drawLeftBorder(g, x, y);
 				break;
 			case RIGHT:
-				drawRightBorder(g, x, y, width);
+				drawRightBorder(g, x, y);
 				break;
 			case BOTTOM_LEFT:
-				drawLeftBorder(g, x, y, width);
-				drawBottomBorder(g, x, y, width);
+				drawLeftBorder(g, x, y);
+				drawBottomBorder(g, x, y);
 				break;
 			case BOTTOM:
-				drawBottomBorder(g, x, y, width);
+				drawBottomBorder(g, x, y);
 				break;
 			case BOTTOM_RIGHT:
-				drawBottomBorder(g, x, y, width);
-				drawRightBorder(g, x, y, width);
+				drawBottomBorder(g, x, y);
+				drawRightBorder(g, x, y);
 				break;
 			case NONE:
 				break;
 		}
 	}
 
-	private static void drawTopBorder(final Graphics g, final int x, final int y, final int width) {
-		g.drawLine(x, y + 1, x + width, y + 1);
-		g.drawLine(x, y + 2, x + width, y + 2);
+	/**
+	 * This method renders the top border for a cell.
+	 *
+	 * @param g the graphic
+	 * @param x the x value
+	 * @param y the y value
+	 */
+	private static void drawTopBorder(final Graphics g, final int x, final int y) {
+		g.drawLine(x, y + 1, x + WIDTH_HEIGHT, y + 1);
+		g.drawLine(x, y + 2, x + WIDTH_HEIGHT, y + 2);
 	}
 
-	private static void drawRightBorder(final Graphics g, final int x, final int y, final int width) {
-		g.drawLine((x + width) - 1, y, (x + width) - 1, y + width);
-		g.drawLine((x + width) - 2, y, (x + width) - 2, y + width);
+	/**
+	 * This method renders the right border for a cell.
+	 *
+	 * @param g the graphic
+	 * @param x the x value
+	 * @param y the y value
+	 */
+	private static void drawRightBorder(final Graphics g, final int x, final int y) {
+		g.drawLine((x + WIDTH_HEIGHT) - 1, y, (x + WIDTH_HEIGHT) - 1, y + WIDTH_HEIGHT);
+		g.drawLine((x + WIDTH_HEIGHT) - 2, y, (x + WIDTH_HEIGHT) - 2, y + WIDTH_HEIGHT);
 	}
 
-	private static void drawBottomBorder(final Graphics g, final int x, final int y, final int width) {
-		g.drawLine(x, (y + width) - 1, x + width, (y + width) - 1);
-		g.drawLine(x, (y + width) - 2, x + width, (y + width) - 2);
+	/**
+	 * This method renders the bottom border for a cell.
+	 *
+	 * @param g the graphic
+	 * @param x the x value
+	 * @param y the y value
+	 */
+	private static void drawBottomBorder(final Graphics g, final int x, final int y) {
+		g.drawLine(x, (y + WIDTH_HEIGHT) - 1, x + WIDTH_HEIGHT, (y + WIDTH_HEIGHT) - 1);
+		g.drawLine(x, (y + WIDTH_HEIGHT) - 2, x + WIDTH_HEIGHT, (y + WIDTH_HEIGHT) - 2);
 	}
 
-	private static void drawLeftBorder(final Graphics g, final int x, final int y, final int width) {
-		g.drawLine(x + 1, y, x + 1, y + width);
-		g.drawLine(x + 2, y, x + 2, y + width);
+	/**
+	 * This method renders the left border for a cell.
+	 *
+	 * @param g the graphic
+	 * @param x the x value
+	 * @param y the y value
+	 */
+	private static void drawLeftBorder(final Graphics g, final int x, final int y) {
+		g.drawLine(x + 1, y, x + 1, y + WIDTH_HEIGHT);
+		g.drawLine(x + 2, y, x + 2, y + WIDTH_HEIGHT);
 	}
 
-	private static BufferedImage createImage(final Font font, final FontRenderContext frc,
-											 final int width, final String s, final boolean isInitial) {
-		final int margin = 6;
-		final double extra = (double) margin + margin;
-
-		final Font largeFont = font.deriveFont((float) ((width * 2) / 3));
-		final Rectangle2D r = largeFont.getStringBounds(s, frc);
-
-		final BigDecimal imgWidth = BigDecimal.valueOf(Math.round(r.getWidth() + extra));
-		final BigDecimal imgHeight = BigDecimal.valueOf(Math.round(extra - r.getY()));
-
-		final BufferedImage image = new BufferedImage(imgWidth.intValue(), imgHeight.intValue(), BufferedImage.TYPE_INT_RGB);
-
-		final Graphics graphics = image.getGraphics();
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-
-		if (isInitial) {
-			graphics.setColor(Color.MAGENTA);
-		} else {
-			graphics.setColor(Color.BLUE);
-		}
-
-		final BigDecimal rY = BigDecimal.valueOf(Math.round(r.getY()));
-
-		final int x = margin;
-		final int y = -rY.intValue();
-
-		graphics.setFont(largeFont);
-		graphics.drawString(s, x, y);
-		graphics.dispose();
-		return image;
-	}
-
+	/**
+	 * This method gets the list of possible values to be rendered as a list of formatted strings.
+	 *
+	 * @param sudokuCell the cell containing the possible values
+	 * @return a list of formatted strings of possible values
+	 */
 	private static List<String> concatenatePossibleValues(final SudokuCell sudokuCell) {
 		final List<String> list = new ArrayList<>();
 		final StringBuilder builder = new StringBuilder();
@@ -204,32 +193,88 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		return list;
 	}
 
-	private static BufferedImage createImage(final List<String> list, final double imageWidth,
-											 final double imageHeight, final double stringHeight) {
-		final int margin = 6;
-		final double extra = (double) margin + margin;
+	/**
+	 * This method creates a {@code BufferedImage} to be rendered with the provided {@code value} using the provided
+	 * {@code font}, {@code frc}, {@code width}, and {@code isInitial} values.
+	 *
+	 * @param font      the font of the value to render
+	 * @param frc       the font render context for rendering the value
+	 * @param width     the width of the value to render
+	 * @param value     the value to render
+	 * @param isInitial whether or not the value to render is the initial value or not
+	 * @return the created {@code BufferedImage} to draw in the cell
+	 */
+	private static BufferedImage createImage(final Font font, final FontRenderContext frc, final int width,
+											 final int value, final boolean isInitial) {
+		final String valueString = Integer.toString(value);
 
-		final BigDecimal imgWidth = BigDecimal.valueOf(Math.round(imageWidth + extra));
-		final BigDecimal imgHeight = BigDecimal.valueOf(Math.round(imageHeight + extra));
+		final Font largeFont = font.deriveFont((width * 2) / THREE_FLOAT);
+		final Rectangle2D r = largeFont.getStringBounds(valueString, frc);
+
+		final Long imgWidth = Math.round(r.getWidth() + TWELVE_DOUBLE);
+		final Long imgHeight = Math.round(TWELVE_DOUBLE - r.getY());
 
 		final BufferedImage image = new BufferedImage(imgWidth.intValue(), imgHeight.intValue(), BufferedImage.TYPE_INT_RGB);
 
-		final Graphics graphics = image.getGraphics();
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+		final Graphics g = image.getGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, image.getWidth(), image.getHeight());
 
-		graphics.setColor(Color.DARK_GRAY);
-
-		final BigDecimal imgStringHeight = BigDecimal.valueOf(Math.round(stringHeight));
-
-		final int x = margin;
-		int y = (margin / 2) + imgStringHeight.intValue();
-
-		for (final String s : list) {
-			graphics.drawString(s, x, y);
-			y += imgStringHeight.intValue();
+		if (isInitial) {
+			g.setColor(Color.MAGENTA);
+		} else {
+			g.setColor(Color.BLUE);
 		}
-		graphics.dispose();
+
+		final Long rY = Math.round(r.getY());
+		final int y = -rY.intValue();
+
+		g.setFont(largeFont);
+		g.drawString(valueString, SIX_INT, y);
+		g.dispose();
+		return image;
+	}
+
+	/**
+	 * This method creates a {@code BufferedImage} to be rendered with the provided {@code possibleValues} list using the
+	 * provided {@code font} and {@code frc} values.
+	 *
+	 * @param font           the font of the values to render
+	 * @param frc            the font render context for rendering the values
+	 * @param possibleValues the possible values to render
+	 * @return the created {@code BufferedImage} to draw in the cell
+	 */
+	private static BufferedImage createImage(final Font font, final FontRenderContext frc, final List<String> possibleValues) {
+		double imageWidth = 0.0D;
+		double imageHeight = 0.0D;
+		double stringHeight = 0.0D;
+		for (final String possibleValue : possibleValues) {
+			final Rectangle2D r = font.getStringBounds(possibleValue, frc);
+			imageWidth = Math.max(imageWidth, r.getWidth());
+			imageHeight += r.getHeight();
+			stringHeight = Math.max(stringHeight, r.getHeight());
+		}
+
+		final Long imgWidth = Math.round(imageWidth + TWELVE_DOUBLE);
+		final Long imgHeight = Math.round(imageHeight + TWELVE_DOUBLE);
+
+		final BufferedImage image = new BufferedImage(imgWidth.intValue(), imgHeight.intValue(), BufferedImage.TYPE_INT_RGB);
+
+		final Graphics g = image.getGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, image.getWidth(), image.getHeight());
+
+		g.setColor(Color.DARK_GRAY);
+
+		final Long imgStringHeight = Math.round(stringHeight);
+		final int imgStringHeightInt = imgStringHeight.intValue();
+		int y = (SIX_INT / 2) + imgStringHeightInt;
+
+		for (final String possibleValue : possibleValues) {
+			g.drawString(possibleValue, SIX_INT, y);
+			y += imgStringHeightInt;
+		}
+		g.dispose();
 		return image;
 	}
 }
