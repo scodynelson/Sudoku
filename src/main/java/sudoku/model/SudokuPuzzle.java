@@ -1,6 +1,9 @@
 package sudoku.model;
 
-import java.awt.Point;
+import sudoku.renderer.SudokuCellRenderer;
+import sudoku.renderer.SudokuPuzzleRenderer;
+
+import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -76,9 +79,15 @@ public class SudokuPuzzle implements Serializable {
 	/**
 	 * This method validates the current puzzle state.
 	 */
-	public final void validate() {
-		throw new UnsupportedOperationException("Validate not yet supported.");
-	}
+	public final String validate() {
+        for (int i = 0; i < cells.size(); i++)
+            if (cells.get(i).getGuessValue() > 0)
+                if (cells.get(i).getValue() != cells.get(i).getGuessValue())
+                {
+                    return "Errors are highlighted in red.";
+                }
+        return "No errors were found.";
+    }
 
 	/**
 	 * This method removes the value of the cell from all X, Y, and internal block declarations to clear possible values.

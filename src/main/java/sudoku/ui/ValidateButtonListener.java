@@ -5,6 +5,7 @@ import sudoku.model.SudokuPuzzle;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JOptionPane;
 
 /**
  * The {@code ValidateButtonListener} is a change listener for the validate button used in the sudoku game user interface.
@@ -32,7 +33,7 @@ public class ValidateButtonListener implements ChangeListener {
 	@Override
 	public void stateChanged(final ChangeEvent e) {
 		if (validatePuzzleButton.isSelected()) {
-			puzzle.validate();
+            JOptionPane.showMessageDialog(null, puzzle.validate(), "Check Puzzle Results", JOptionPane.INFORMATION_MESSAGE);
 			frame.repaintPanel();
 			validatePuzzleButton.setSelected(false);
 		}
