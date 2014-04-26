@@ -80,11 +80,13 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	 * @param inputValue the input value to validate
 	 * @return an acceptable value if entered, or 0 otherwise
 	 */
-	private static int getAcceptableValue(final SudokuCell sudokuCell, final String inputValue) {
+	private int getAcceptableValue(final SudokuCell sudokuCell, final String inputValue) {
 		final int value = Integer.parseInt(inputValue);
 		if (VALUE_RANGE.contains(value) && sudokuCell.isPossibleValue(value)) {
 			return value;
-		}
+		} else {
+            JOptionPane.showMessageDialog(frame.getFrame(), SudokuConstants.INVALID_INPUT_TEXT);
+        }
 		return 0;
 	}
 
