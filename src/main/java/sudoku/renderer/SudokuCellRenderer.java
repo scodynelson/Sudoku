@@ -53,16 +53,17 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		final FontRenderContext frc = new FontRenderContext(null, true, true);
 
 		final boolean isInitial = object.isInitial();
+        final boolean isValid = object.isValid();
 		final int guessValue = object.getGuessValue();
 		final boolean isShowHints = object.isShowHints();
 
 		final BufferedImage image;
 		if (isInitial) {
 			final int value = object.getValue();
-			image = createImage(font, frc, WIDTH_HEIGHT, value, true);
+			image = createImage(font, frc, WIDTH_HEIGHT, value, isInitial, isValid);
 		} else if (guessValue > 0) {
-			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, false);
-		} else if (isShowHints) {
+			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, isInitial, isValid);
+        } else if (isShowHints) {
 			final List<String> possibleValues = concatenatePossibleValues(object);
 			image = createImage(font, frc, possibleValues);
 		} else {
@@ -212,7 +213,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 	 * @return the created {@code BufferedImage} to draw in the cell
 	 */
 	private static BufferedImage createImage(final Font font, final FontRenderContext frc, final int width,
-											 final int value, final boolean isInitial) {
+											 final int value, final boolean isInitial, final boolean isValid) {
 		final String valueString = Integer.toString(value);
 
 		final Font largeFont = font.deriveFont((width * 2) / THREE_FLOAT);
@@ -229,7 +230,9 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 		if (isInitial) {
 			g.setColor(Color.MAGENTA);
-		} else {
+		} else if (!isValid) {
+            g.setColor(Color.RED);
+        } else {
 			g.setColor(Color.BLUE);
 		}
 

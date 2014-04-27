@@ -142,8 +142,9 @@ final class SudokuMockDB {
 	 */
 	private static void addCell(final List<SudokuCell> cells, final int value, final SudokuCellBorderType cellBorderType,
 								final int row, final int column, final boolean isInitial) {
+        boolean isValid = true;
 		final Point point = new Point(column, row);
-		final SudokuCell sudokuCell = new SudokuCell(value, isInitial, cellBorderType, point);
+		final SudokuCell sudokuCell = new SudokuCell(value, isInitial, isValid, cellBorderType, point);
 		cells.add(sudokuCell);
 	}
 }

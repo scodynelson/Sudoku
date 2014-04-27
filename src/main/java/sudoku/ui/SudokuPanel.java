@@ -1,7 +1,5 @@
 package sudoku.ui;
 
-import sudoku.ui.SudokuFrame;
-import sudoku.ui.SetValueMouseAdapter;
 import sudoku.model.SudokuPuzzle;
 import sudoku.renderer.SudokuPuzzleRenderer;
 import sudoku.resources.SudokuConstants;

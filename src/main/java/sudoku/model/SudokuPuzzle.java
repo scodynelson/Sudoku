@@ -1,8 +1,5 @@
 package sudoku.model;
 
-import sudoku.renderer.SudokuCellRenderer;
-import sudoku.renderer.SudokuPuzzleRenderer;
-
 import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
@@ -80,13 +77,21 @@ public class SudokuPuzzle implements Serializable {
 	 * This method validates the current puzzle state.
 	 */
 	public final String validate() {
+        boolean validPuzzle = true;
+
         for (int i = 0; i < cells.size(); i++)
             if (cells.get(i).getGuessValue() > 0)
                 if (cells.get(i).getValue() != cells.get(i).getGuessValue())
                 {
-                    return "Errors are highlighted in red.";
+                    cells.get(i).setIsValid(false);
+                    validPuzzle = false;
                 }
-        return "No errors were found.";
+
+        if (validPuzzle) {
+            return "No errors were found.";
+        } else {
+            return "Errors are highlighted in red.";
+        }
     }
 
 	/**
