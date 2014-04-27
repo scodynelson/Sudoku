@@ -1,8 +1,5 @@
 package sudoku.model;
 
-import sudoku.renderer.SudokuCellRenderer;
-import sudoku.renderer.SudokuPuzzleRenderer;
-
 import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
@@ -80,13 +77,21 @@ public class SudokuPuzzle implements Serializable {
 	 * This method validates the current puzzle state.
 	 */
 	public final String validate() {
+        boolean validPuzzle = true;
+
         for (int i = 0; i < cells.size(); i++)
             if (cells.get(i).getGuessValue() > 0)
                 if (cells.get(i).getValue() != cells.get(i).getGuessValue())
                 {
-                    return "Errors are highlighted in red.";
+                    cells.get(i).setIsValid(false);
+                    validPuzzle = false;
                 }
-        return "No errors were found.";
+
+        if (validPuzzle) {
+            return "No errors were found.";
+        } else {
+            return "Errors are highlighted in red.";
+        }
     }
 
 	/**
@@ -125,6 +130,50 @@ public class SudokuPuzzle implements Serializable {
 			}
 		}
 	}
+
+    /**
+     * This method adds back a guessed value to the possible values for all X, Y, and internal block declarations to update possible values.
+     *
+     * @param cell the cell containing the value to add and the point location for X and Y reference
+     */
+    public void addValue(final SudokuCell cell) {
+
+        final Point point = cell.getPoint();
+        final int value = cell.getGuessValue();
+
+        // Add to X and Y axis
+        for (final SudokuCell currentCell : cells) {
+            final Point currentPoint = currentCell.getPoint();
+            if ( ((currentPoint.x == point.x) || (currentPoint.y == point.y)) && !(currentCell.getPossibleValues().contains(value)) ) {
+                currentCell.addPossibleValue(value);
+            }
+        }
+
+        // Add to internal block
+        final Double xOver3 = Math.floor(point.x / THREE_DOUBLE);
+        final int xOver3AsInt = xOver3.intValue();
+        final int minX = xOver3AsInt * THREE_INT;
+        final int maxX = ((xOver3AsInt + 1) * THREE_INT) - 1;
+
+        final Double yOver3 = Math.floor(point.y / THREE_DOUBLE);
+        final int yOver3AsInt = yOver3.intValue();
+        final int minY = yOver3AsInt * THREE_INT;
+        final int maxY = ((yOver3AsInt + 1) * THREE_INT) - 1;
+
+        for (final SudokuCell currentCell : cells) {
+            final Point currentPoint = currentCell.getPoint();
+            if ( (isBetweenInclusive(currentPoint.x, minX, maxX) && isBetweenInclusive(currentPoint.y, minY, maxY)) && !(currentCell.getPossibleValues().contains(value)) ) {
+                currentCell.addPossibleValue(value);
+            }
+        }
+
+        // Update hints
+        cell.reset();
+        for (final SudokuCell currentCell : cells) {
+            removeValues(currentCell);
+        }
+    }
+
 
 	/**
 	 * Private method used to test inclusion of the provided {@code value} between the provided {@code min} and {@code max}

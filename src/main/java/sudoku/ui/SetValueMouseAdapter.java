@@ -37,11 +37,19 @@ public class SetValueMouseAdapter extends MouseAdapter {
 
 		final SudokuCell cell = puzzle.getCellAtPoint(point);
 		if (cell != null) {
+
+            // If previous guessValue invalid then reset the cell and update the hints
+            boolean isValid = cell.getIsValid(cell);
+            int oldValue = cell.getGuessValue();
+            if (!isValid || oldValue > 0) {
+                puzzle.addValue(cell);
+            }
+
+            // Get new guessValue and remove it from hints for other cells
 			final int value = getValue(cell);
 			if (value > 0) { // Cancel button
 				cell.setGuessValue(value);
 				puzzle.removeValues(cell);
-				cell.clearPossibleValues();
 				frame.repaintPanel();
 			}
 		}
@@ -63,7 +71,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			}
 
 			try {
-				value = getAcceptableValue(sudokuCell, inputValue);
+				value = getAcceptableValue(inputValue);
 			} catch (final NumberFormatException ignored) {
 				value = 0;
 			}
@@ -72,19 +80,19 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	}
 
 	/**
-	 * This method validates and returns an acceptable value. The method will return the selected value if it is an integer,
-	 * it is within the valid range for a sudoku input value, and it is an possible value for the cell. If none of the
-	 * previous conditions are met, the method will return the value 0.
+	 * This method validates and returns an acceptable value. The method will return the selected value if it is an integer, and
+	 * it is within the valid range for a sudoku input value. If none of the previous conditions are met, the method will return the value 0.
 	 *
-	 * @param sudokuCell the cell to check for possible value
 	 * @param inputValue the input value to validate
 	 * @return an acceptable value if entered, or 0 otherwise
 	 */
-	private static int getAcceptableValue(final SudokuCell sudokuCell, final String inputValue) {
+	private int getAcceptableValue(final String inputValue) {
 		final int value = Integer.parseInt(inputValue);
-		if (VALUE_RANGE.contains(value) && sudokuCell.isPossibleValue(value)) {
+		if (VALUE_RANGE.contains(value)) {
 			return value;
-		}
+		} else {
+            JOptionPane.showMessageDialog(frame.getFrame(), SudokuConstants.INVALID_INPUT_TEXT);
+        }
 		return 0;
 	}
 

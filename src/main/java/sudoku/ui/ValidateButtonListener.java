@@ -35,7 +35,7 @@ public class ValidateButtonListener implements ChangeListener {
 		if (validatePuzzleButton.isSelected()) {
             JOptionPane.showMessageDialog(null, puzzle.validate(), "Check Puzzle Results", JOptionPane.INFORMATION_MESSAGE);
 			frame.repaintPanel();
-			validatePuzzleButton.setSelected(false);
+            validatePuzzleButton.setSelected(false);
 		}
 	}
 

@@ -23,20 +23,23 @@ public class SudokuCell implements Serializable {
 
 	private int guessValue;
 	private boolean showHints;
+    private boolean isValid;
 
-	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
+	private List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
 
 	/**
 	 * Public constructor.
 	 *
 	 * @param value          the value of the cell
 	 * @param isInitial      whether or not the cell is initially filled
+     * @param isValid        whether or not the cell value is valid
 	 * @param cellBorderType the border type of the cell
 	 * @param point          the point location of the cell
 	 */
-	public SudokuCell(final int value, final boolean isInitial, final SudokuCellBorderType cellBorderType, final Point point) {
+	public SudokuCell(final int value, final boolean isInitial, final boolean isValid, final SudokuCellBorderType cellBorderType, final Point point) {
 		this.value = value;
 		this.isInitial = isInitial;
+        this.isValid = isValid;
 		this.cellBorderType = cellBorderType;
 		this.point = point;
 		bounds = getRectangle(point);
@@ -64,12 +67,19 @@ public class SudokuCell implements Serializable {
 	public final void reset() {
 		guessValue = 0;
 		showHints = false;
-		possibleValues.clear();
-
-		for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
-			possibleValues.add(i);
-		}
+		isValid = true;
+        possibleValues = calculatePossibleValues();
 	}
+
+    public List<Integer> calculatePossibleValues() {
+        possibleValues.clear();
+
+        for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
+            possibleValues.add(i);
+        }
+
+        return possibleValues;
+    }
 
 	/**
 	 * Getter for cellMap value.
@@ -89,7 +99,16 @@ public class SudokuCell implements Serializable {
 		return isInitial;
 	}
 
-	/**
+    /**
+     * Getter for isValid value.
+     *
+     * @return the isValid value
+     */
+    public boolean isValid() {
+        return isValid;
+    }
+
+    /**
 	 * Getter for cellBorderType value.
 	 *
 	 * @return the cellBorderType value
@@ -133,6 +152,24 @@ public class SudokuCell implements Serializable {
 	public void setGuessValue(final int guessValue) {
 		this.guessValue = guessValue;
 	}
+
+    /**
+     * Getter for isValid value.
+     *
+     * @param cell to grab boolean isValid from
+     */
+    public boolean getIsValid(final SudokuCell cell) {
+        return cell.isValid;
+    }
+
+    /**
+     * Setter for isValid value.
+     *
+     * @param isValid is set to false if guessValue != getValue
+     */
+    public void setIsValid(boolean isValid) {
+        this.isValid = isValid;
+    }
 
 	/**
 	 * Getter for showHints value.
@@ -178,6 +215,15 @@ public class SudokuCell implements Serializable {
 		possibleValues.remove(possibleValue);
 	}
 
+    /**
+     * Adds provided {@code possibleValue} to the {@code possibleValues} list.
+     *
+     * @param possibleValue the possible value to add
+     */
+    public void addPossibleValue(final Integer possibleValue) {
+        possibleValues.add(possibleValue);
+    }
+
 	/**
 	 * Clears the {@code possibleValues} list.
 	 */
@@ -200,6 +246,7 @@ public class SudokuCell implements Serializable {
 		return "SudokuCell{"
 				+ "value=" + value
 				+ ", isInitial=" + isInitial
+                + ", isValid=" + isValid
 				+ ", cellBorderType=" + cellBorderType
 				+ ", point=" + point
 				+ ", bounds=" + bounds

@@ -134,7 +134,7 @@ final class SudokuMockDB {
 	 * This private method adds a new cell to the provided {@code cells} with the provided input parameters.
 	 *
 	 * @param cells          the list to populate
-	 * @param value          the value of the cell
+	 * @param value          the correct value for the cell
 	 * @param cellBorderType the cell border type
 	 * @param row            the row of the cell
 	 * @param column         the column of the cell
@@ -142,8 +142,9 @@ final class SudokuMockDB {
 	 */
 	private static void addCell(final List<SudokuCell> cells, final int value, final SudokuCellBorderType cellBorderType,
 								final int row, final int column, final boolean isInitial) {
+        boolean isValid = true;
 		final Point point = new Point(column, row);
-		final SudokuCell sudokuCell = new SudokuCell(value, isInitial, cellBorderType, point);
+		final SudokuCell sudokuCell = new SudokuCell(value, isInitial, isValid, cellBorderType, point);
 		cells.add(sudokuCell);
 	}
 }
