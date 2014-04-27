@@ -25,7 +25,7 @@ public class SudokuCell implements Serializable {
 	private boolean showHints;
     private boolean isValid;
 
-	private final List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
+	private List<Integer> possibleValues = new ArrayList<>(SudokuConstants.PUZZLE_WIDTH);
 
 	/**
 	 * Public constructor.
@@ -67,13 +67,19 @@ public class SudokuCell implements Serializable {
 	public final void reset() {
 		guessValue = 0;
 		showHints = false;
-		possibleValues.clear();
-        isValid = true;
-
-		for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
-			possibleValues.add(i);
-		}
+		isValid = true;
+        possibleValues = calculatePossibleValues();
 	}
+
+    public List<Integer> calculatePossibleValues() {
+        possibleValues.clear();
+
+        for (int i = 1; i <= SudokuConstants.PUZZLE_WIDTH; i++) {
+            possibleValues.add(i);
+        }
+
+        return possibleValues;
+    }
 
 	/**
 	 * Getter for cellMap value.
@@ -148,6 +154,15 @@ public class SudokuCell implements Serializable {
 	}
 
     /**
+     * Getter for isValid value.
+     *
+     * @param cell to grab boolean isValid from
+     */
+    public boolean getIsValid(final SudokuCell cell) {
+        return cell.isValid;
+    }
+
+    /**
      * Setter for isValid value.
      *
      * @param isValid is set to false if guessValue != getValue
@@ -199,6 +214,15 @@ public class SudokuCell implements Serializable {
 	public void removePossibleValue(final Integer possibleValue) { // NOTE: Use Object Integer so we don't go for index
 		possibleValues.remove(possibleValue);
 	}
+
+    /**
+     * Adds provided {@code possibleValue} to the {@code possibleValues} list.
+     *
+     * @param possibleValue the possible value to add
+     */
+    public void addPossibleValue(final Integer possibleValue) {
+        possibleValues.add(possibleValue);
+    }
 
 	/**
 	 * Clears the {@code possibleValues} list.

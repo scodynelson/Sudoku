@@ -134,7 +134,7 @@ final class SudokuMockDB {
 	 * This private method adds a new cell to the provided {@code cells} with the provided input parameters.
 	 *
 	 * @param cells          the list to populate
-	 * @param value          the value of the cell
+	 * @param value          the correct value for the cell
 	 * @param cellBorderType the cell border type
 	 * @param row            the row of the cell
 	 * @param column         the column of the cell

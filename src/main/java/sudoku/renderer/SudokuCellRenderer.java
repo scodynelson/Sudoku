@@ -59,8 +59,7 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 		final BufferedImage image;
 		if (isInitial) {
-			final int value = object.getValue();
-			image = createImage(font, frc, WIDTH_HEIGHT, value, isInitial, isValid);
+			image = createImage(font, frc, WIDTH_HEIGHT, object.getValue(), isInitial, isValid);
 		} else if (guessValue > 0) {
 			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, isInitial, isValid);
         } else if (isShowHints) {
