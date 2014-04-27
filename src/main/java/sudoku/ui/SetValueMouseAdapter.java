@@ -38,18 +38,17 @@ public class SetValueMouseAdapter extends MouseAdapter {
 		final SudokuCell cell = puzzle.getCellAtPoint(point);
 		if (cell != null) {
 
-            // If previous guessValue invalid then re-add it to possible values for other cells
+            // If previous guessValue invalid then reset the cell and update the hints
             boolean isValid = cell.getIsValid(cell);
             if (!isValid) {
                 puzzle.addValue(cell);
             }
 
-            // Get new guessValue and remove it from possible values for other cells
+            // Get new guessValue and remove it from hints for other cells
 			final int value = getValue(cell);
 			if (value > 0) { // Cancel button
 				cell.setGuessValue(value);
 				puzzle.removeValues(cell);
-//				cell.clearPossibleValues(); // TODO - Simply clears all possibilities.
 				frame.repaintPanel();
 			}
 		}
@@ -76,8 +75,6 @@ public class SetValueMouseAdapter extends MouseAdapter {
 				value = 0;
 			}
 		}
-        // New, legal value, so (re)set isValid flag.
-        sudokuCell.setIsValid(true);
 		return value;
 	}
 
