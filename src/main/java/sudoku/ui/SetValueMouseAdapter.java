@@ -40,7 +40,8 @@ public class SetValueMouseAdapter extends MouseAdapter {
 
             // If previous guessValue invalid then reset the cell and update the hints
             boolean isValid = cell.getIsValid(cell);
-            if (!isValid) {
+            int oldValue = cell.getGuessValue();
+            if (!isValid || oldValue > 0) {
                 puzzle.addValue(cell);
             }
 
@@ -70,7 +71,7 @@ public class SetValueMouseAdapter extends MouseAdapter {
 			}
 
 			try {
-				value = getAcceptableValue(sudokuCell, inputValue);
+				value = getAcceptableValue(inputValue);
 			} catch (final NumberFormatException ignored) {
 				value = 0;
 			}
@@ -79,17 +80,15 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	}
 
 	/**
-	 * This method validates and returns an acceptable value. The method will return the selected value if it is an integer,
-	 * it is within the valid range for a sudoku input value, and it is an possible value for the cell. If none of the
-	 * previous conditions are met, the method will return the value 0.
+	 * This method validates and returns an acceptable value. The method will return the selected value if it is an integer, and
+	 * it is within the valid range for a sudoku input value. If none of the previous conditions are met, the method will return the value 0.
 	 *
-	 * @param sudokuCell the cell to check for possible value
 	 * @param inputValue the input value to validate
 	 * @return an acceptable value if entered, or 0 otherwise
 	 */
-	private int getAcceptableValue(final SudokuCell sudokuCell, final String inputValue) {
+	private int getAcceptableValue(final String inputValue) {
 		final int value = Integer.parseInt(inputValue);
-		if (VALUE_RANGE.contains(value) && sudokuCell.isPossibleValue(value)) {
+		if (VALUE_RANGE.contains(value)) {
 			return value;
 		} else {
             JOptionPane.showMessageDialog(frame.getFrame(), SudokuConstants.INVALID_INPUT_TEXT);
