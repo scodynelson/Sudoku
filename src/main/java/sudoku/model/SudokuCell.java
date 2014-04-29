@@ -71,6 +71,11 @@ public class SudokuCell implements Serializable {
         possibleValues = calculatePossibleValues();
 	}
 
+    /**
+     * This method sets up the possible values for hints.
+     *
+     * @return list of possible values
+     */
     public List<Integer> calculatePossibleValues() {
         possibleValues.clear();
 
