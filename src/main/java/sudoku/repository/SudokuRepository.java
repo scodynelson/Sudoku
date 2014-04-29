@@ -20,7 +20,19 @@ public class SudokuRepository {
 	 *
 	 * @return the sudoku puzzle
 	 */
-	public SudokuPuzzle getPuzzle() {
-		return SudokuMockDB.SAMPLE_PUZZLE;
+	public SudokuPuzzle getPuzzle(String difficulty) {
+        switch (difficulty) {
+            case "Easy":
+                return SudokuEasyPuzzle.EASY_PUZZLE;
+            case "Medium":
+                return SudokuMediumPuzzle.MEDIUM_PUZZLE;
+            case "Hard":
+                return SudokuHardPuzzle.HARD_PUZZLE;
+            case "Challenging":
+                return SudokuChallengingPuzzle.CHALLENGING_PUZZLE;
+            default:
+                break;
+        }
+        return null;
 	}
 }

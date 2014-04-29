@@ -26,7 +26,7 @@ public class SudokuPuzzle implements Serializable {
 		reset();
 	}
 
-	/**
+    /**
 	 * Getter for cells value.
 	 *
 	 * @return the cells value
