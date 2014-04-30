@@ -98,9 +98,8 @@ public class SudokuFrame implements Serializable {
 	 * This method is used to repaint the board with any updated values.
 	 */
 	public void repaintPanel() {
-//		panel.repaint();
-        panel.invalidate();
-        panel.updateUI();
+		panel.invalidate();
+		panel.updateUI();
 	}
 
 	@Override

@@ -26,4 +26,9 @@ public class SudokuPuzzleRenderer implements SudokuRenderer<SudokuPuzzle> {
 			SudokuCellRenderer.INSTANCE.render(cell, g);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "SudokuPuzzleRenderer{}";
+	}
 }

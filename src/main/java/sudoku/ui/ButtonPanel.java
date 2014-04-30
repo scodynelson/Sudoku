@@ -1,10 +1,5 @@
 package sudoku.ui;
 
-import sudoku.ui.SudokuFrame;
-import sudoku.ui.HintButtonListener;
-import sudoku.ui.ResetButtonListener;
-import sudoku.ui.ToggleListener;
-import sudoku.ui.ValidateButtonListener;
 import sudoku.model.SudokuPuzzle;
 import sudoku.resources.SudokuConstants;
 
@@ -18,7 +13,7 @@ import java.io.Serializable;
 /**
  * The {@code ButtonPanel} object creates a button panel for the sudoku game user interface.
  */
-public class ButtonPanel implements Serializable {
+class ButtonPanel implements Serializable {
 
 	private static final long serialVersionUID = 2891957122249934988L;
 
@@ -32,16 +27,33 @@ public class ButtonPanel implements Serializable {
 	private JPanel panel;
 
 	/**
-	 * Public constructor.
+	 * Package constructor.
 	 *
 	 * @param frame  the frame to use
 	 * @param puzzle the puzzle to use
 	 */
-	public ButtonPanel(final SudokuFrame frame, final SudokuPuzzle puzzle) {
+	ButtonPanel(final SudokuFrame frame, final SudokuPuzzle puzzle) {
 		this.frame = frame;
 		this.puzzle = puzzle;
 
 		init();
+	}
+
+	/**
+	 * This private static method adds the provided {@code toggleButton} to the provided {@code panel} creating a set of
+	 * constraints using the rest of the provided input values.
+	 *
+	 * @param panel        the panel to add the toggleButton to
+	 * @param toggleButton the toggleButton to add to the panel
+	 * @param gridY        the y location on the grid
+	 */
+	private static void addButtonToPanel(final JPanel panel, final JToggleButton toggleButton, final int gridY) {
+
+		final Insets insets = new Insets(10, 10, 0, 10);
+		final GridBagConstraints gridBagConstraints =
+				new GridBagConstraints(0, gridY, 1, 1, 1.0D, 1.0D, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+						insets, 0, 0);
+		panel.add(toggleButton, gridBagConstraints);
 	}
 
 	/**
@@ -102,23 +114,6 @@ public class ButtonPanel implements Serializable {
 	}
 
 	/**
-	 * This private static method adds the provided {@code toggleButton} to the provided {@code panel} creating a set of
-	 * constraints using the rest of the provided input values.
-	 *
-	 * @param panel        the panel to add the toggleButton to
-	 * @param toggleButton the toggleButton to add to the panel
-	 * @param gridY        the y location on the grid
-	 */
-	private static void addButtonToPanel(final JPanel panel, final JToggleButton toggleButton, final int gridY) {
-
-		final Insets insets = new Insets(10, 10, 0, 10);
-		final GridBagConstraints gridBagConstraints =
-				new GridBagConstraints(0, gridY, 1, 1, 1.0D, 1.0D, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-						insets, 0, 0);
-		panel.add(toggleButton, gridBagConstraints);
-	}
-
-	/**
 	 * Getter for the panel value.
 	 *
 	 * @return the panel value
@@ -134,7 +129,7 @@ public class ButtonPanel implements Serializable {
 				+ ", puzzle=" + puzzle
 				+ ", resetPuzzleButton=" + resetPuzzleButton
 				+ ", hintPuzzleButton=" + hintPuzzleButton
-//				+ ", validatePuzzleButton=" + validatePuzzleButton
+				+ ", validatePuzzleButton=" + validatePuzzleButton
 				+ ", panel=" + panel
 				+ '}';
 	}

@@ -1,16 +1,17 @@
 package sudoku.ui;
 
 import sudoku.model.SudokuPuzzle;
+import sudoku.resources.SudokuConstants;
 
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.JOptionPane;
 
 /**
  * The {@code ValidateButtonListener} is a change listener for the validate button used in the sudoku game user interface.
  */
-public class ValidateButtonListener implements ChangeListener {
+class ValidateButtonListener implements ChangeListener {
 
 	private final JToggleButton validatePuzzleButton;
 
@@ -18,13 +19,13 @@ public class ValidateButtonListener implements ChangeListener {
 	private final SudokuPuzzle puzzle;
 
 	/**
-	 * Public constructor.
+	 * Package constructor.
 	 *
 	 * @param validatePuzzleButton the validate toggle button
 	 * @param frame                the frame
 	 * @param puzzle               the puzzle
 	 */
-	public ValidateButtonListener(final JToggleButton validatePuzzleButton, final SudokuFrame frame, final SudokuPuzzle puzzle) {
+	ValidateButtonListener(final JToggleButton validatePuzzleButton, final SudokuFrame frame, final SudokuPuzzle puzzle) {
 		this.validatePuzzleButton = validatePuzzleButton;
 		this.frame = frame;
 		this.puzzle = puzzle;
@@ -33,9 +34,14 @@ public class ValidateButtonListener implements ChangeListener {
 	@Override
 	public void stateChanged(final ChangeEvent e) {
 		if (validatePuzzleButton.isSelected()) {
-            JOptionPane.showMessageDialog(null, puzzle.validate(), "Check Puzzle Results", JOptionPane.INFORMATION_MESSAGE);
+			final boolean isValid = puzzle.validate();
+
+			final String message = isValid ? SudokuConstants.VALIDATE_PANEL_VALID_MESSAGE : SudokuConstants.VALIDATE_PANEL_INVALID_MESSAGE;
+			final String title = SudokuConstants.VALIDATE_PANEL_TITLE;
+
+			JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
 			frame.repaintPanel();
-            validatePuzzleButton.setSelected(false);
+			validatePuzzleButton.setSelected(false);
 		}
 	}
 
