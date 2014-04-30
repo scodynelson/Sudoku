@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 /**
  * The {@code SetValueMouseAdapter} is a mouse adapter for input into the cells in the sudoku game user interface.
  */
-public class SetValueMouseAdapter extends MouseAdapter {
+class SetValueMouseAdapter extends MouseAdapter {
 
 	private static final Range<Integer> VALUE_RANGE = Range.between(SudokuConstants.PUZZLE_MIN_VALUE, SudokuConstants.PUZZLE_MAX_VALUE);
 
@@ -21,12 +21,12 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	private final SudokuPuzzle puzzle;
 
 	/**
-	 * Public constructor.
+	 * Package constructor.
 	 *
 	 * @param frame  the frame
 	 * @param puzzle the puzzle
 	 */
-	public SetValueMouseAdapter(final SudokuFrame frame, final SudokuPuzzle puzzle) {
+	SetValueMouseAdapter(final SudokuFrame frame, final SudokuPuzzle puzzle) {
 		this.frame = frame;
 		this.puzzle = puzzle;
 	}
@@ -38,15 +38,15 @@ public class SetValueMouseAdapter extends MouseAdapter {
 		final SudokuCell cell = puzzle.getCellAtPoint(point);
 		if (cell != null) {
 
-            // If previous guessValue invalid then reset the cell and update the hints
-            boolean isValid = cell.getIsValid(cell);
-            int oldValue = cell.getGuessValue();
-            if (!isValid || oldValue > 0) {
-                puzzle.addValue(cell);
-            }
+			// If previous guessValue invalid then reset the cell and update the hints
+			final boolean isInvalid = !cell.isValid();
+			final int oldValue = cell.getGuessValue();
+			if (isInvalid || (oldValue > 0)) {
+				puzzle.addValue(cell);
+			}
 
-            // Get new guessValue and remove it from hints for other cells
-			final int value = getValue(cell);
+			// Get new guessValue and remove it from hints for other cells
+			final int value = getValue();
 			if (value > 0) { // Cancel button
 				cell.setGuessValue(value);
 				puzzle.removeValues(cell);
@@ -58,10 +58,9 @@ public class SetValueMouseAdapter extends MouseAdapter {
 	/**
 	 * This method gets an acceptable input value from the user that will be used to set the guess value in the selected cell.
 	 *
-	 * @param sudokuCell the cell to set the value for
 	 * @return the acceptable input value, or 0 if none was chosen
 	 */
-	private int getValue(final SudokuCell sudokuCell) {
+	private int getValue() {
 		int value = 0;
 		while (value == 0) {
 			final String inputValue = JOptionPane.showInputDialog(frame.getFrame(), SudokuConstants.INPUT_DIALOG_TITLE);
@@ -90,9 +89,9 @@ public class SetValueMouseAdapter extends MouseAdapter {
 		final int value = Integer.parseInt(inputValue);
 		if (VALUE_RANGE.contains(value)) {
 			return value;
-		} else {
-            JOptionPane.showMessageDialog(frame.getFrame(), SudokuConstants.INVALID_INPUT_TEXT);
-        }
+		}
+
+		JOptionPane.showMessageDialog(frame.getFrame(), SudokuConstants.INVALID_INPUT_TEXT);
 		return 0;
 	}
 

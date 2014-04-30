@@ -53,16 +53,16 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		final FontRenderContext frc = new FontRenderContext(null, true, true);
 
 		final boolean isInitial = object.isInitial();
-        final boolean isValid = object.isValid();
+		final boolean isValid = object.isValid();
 		final int guessValue = object.getGuessValue();
 		final boolean isShowHints = object.isShowHints();
 
 		final BufferedImage image;
 		if (isInitial) {
-			image = createImage(font, frc, WIDTH_HEIGHT, object.getValue(), isInitial, isValid);
+			image = createImage(font, frc, WIDTH_HEIGHT, object.getValue(), true, isValid);
 		} else if (guessValue > 0) {
-			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, isInitial, isValid);
-        } else if (isShowHints) {
+			image = createImage(font, frc, WIDTH_HEIGHT, guessValue, false, isValid);
+		} else if (isShowHints) {
 			final List<String> possibleValues = concatenatePossibleValues(object);
 			image = createImage(font, frc, possibleValues);
 		} else {
@@ -202,13 +202,14 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 
 	/**
 	 * This method creates a {@code BufferedImage} to be rendered with the provided {@code value} using the provided
-	 * {@code font}, {@code frc}, {@code width}, and {@code isInitial} values.
+	 * {@code font}, {@code frc}, {@code width}, {@code isInitial}, and {@code isValid} values.
 	 *
 	 * @param font      the font of the value to render
 	 * @param frc       the font render context for rendering the value
 	 * @param width     the width of the value to render
 	 * @param value     the value to render
 	 * @param isInitial whether or not the value to render is the initial value or not
+	 * @param isValid   whether or not the render is valid
 	 * @return the created {@code BufferedImage} to draw in the cell
 	 */
 	private static BufferedImage createImage(final Font font, final FontRenderContext frc, final int width,
@@ -230,8 +231,8 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		if (isInitial) {
 			g.setColor(Color.MAGENTA);
 		} else if (!isValid) {
-            g.setColor(Color.RED);
-        } else {
+			g.setColor(Color.RED);
+		} else {
 			g.setColor(Color.BLUE);
 		}
 
@@ -285,5 +286,10 @@ public class SudokuCellRenderer implements SudokuRenderer<SudokuCell> {
 		}
 		g.dispose();
 		return image;
+	}
+
+	@Override
+	public String toString() {
+		return "SudokuCellRenderer{}";
 	}
 }

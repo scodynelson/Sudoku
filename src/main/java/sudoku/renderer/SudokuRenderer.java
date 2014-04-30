@@ -5,9 +5,9 @@ import java.awt.Graphics;
 /**
  * The {@code SudokuRenderer} object is an abstraction for the rendering capabilities needed when rendering the sudoku game.
  *
- * @param <TYPE> the type of object to render
+ * @param <T> the type of object to render
  */
-interface SudokuRenderer<TYPE> {
+interface SudokuRenderer<T> {
 
 	/**
 	 * The rendering method for rendering the sudoku game object.
@@ -15,5 +15,5 @@ interface SudokuRenderer<TYPE> {
 	 * @param object the object to render
 	 * @param g      the graphic used when rendering the object
 	 */
-	void render(TYPE object, Graphics g);
+	void render(T object, Graphics g);
 }

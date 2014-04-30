@@ -8,16 +8,16 @@ import java.util.Arrays;
 /**
  * The {@code ToggleListener} is a change listener for all buttons used in the sudoku game user interface.
  */
-public class ToggleListener implements ChangeListener {
+class ToggleListener implements ChangeListener {
 
 	private final JToggleButton[] toggleButtons;
 
 	/**
-	 * Public constructor.
+	 * Package constructor.
 	 *
 	 * @param buttons the buttons to watch for state change and to update accordingly
 	 */
-	public ToggleListener(final JToggleButton... buttons) {
+	ToggleListener(final JToggleButton... buttons) {
 		toggleButtons = new JToggleButton[buttons.length];
 		System.arraycopy(buttons, 0, toggleButtons, 0, buttons.length);
 	}

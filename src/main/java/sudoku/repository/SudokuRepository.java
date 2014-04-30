@@ -1,6 +1,7 @@
 package sudoku.repository;
 
 import sudoku.model.SudokuPuzzle;
+import sudoku.resources.SudokuDifficultyType;
 
 /**
  * The {@code SudokuRepository} object is used for storing and retrieving sudoku puzzles for the sudoku game.
@@ -18,21 +19,27 @@ public class SudokuRepository {
 	/**
 	 * Getter for the sudoku puzzle.
 	 *
+	 * @param difficultyType the difficulty of the puzzle to return
 	 * @return the sudoku puzzle
 	 */
-	public SudokuPuzzle getPuzzle(String difficulty) {
-        switch (difficulty) {
-            case "Easy":
-                return SudokuEasyPuzzle.EASY_PUZZLE;
-            case "Medium":
-                return SudokuMediumPuzzle.MEDIUM_PUZZLE;
-            case "Hard":
-                return SudokuHardPuzzle.HARD_PUZZLE;
-            case "Challenging":
-                return SudokuChallengingPuzzle.CHALLENGING_PUZZLE;
-            default:
-                break;
-        }
-        return null;
+	public SudokuPuzzle getPuzzle(final SudokuDifficultyType difficultyType) {
+		switch (difficultyType) {
+			case EASY:
+				return SudokuEasyPuzzle.EASY_PUZZLE;
+			case MEDIUM:
+				return SudokuMediumPuzzle.MEDIUM_PUZZLE;
+			case HARD:
+				return SudokuHardPuzzle.HARD_PUZZLE;
+			case CHALLENGING:
+				return SudokuChallengingPuzzle.CHALLENGING_PUZZLE;
+			default:
+				break;
+		}
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "SudokuRepository{}";
 	}
 }
